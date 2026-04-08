@@ -1402,29 +1402,16 @@
   // ── BGM
   const bgm    = document.getElementById('bgm');
   const bgmBtn = document.getElementById('bgmBtn');
-  let   playing = false;
 
   function toggleBgm() {
-    if (playing) {
-      bgm.pause();
-      bgmBtn.textContent = '🔇';
-    } else {
+    if (bgm.paused) {
       bgm.play();
       bgmBtn.textContent = '🎵';
+    } else {
+      bgm.pause();
+      bgmBtn.textContent = '🔇';
     }
-    playing = !playing;
   }
-
-  // 첫 클릭/터치 시 자동재생 시도
-  document.addEventListener('click', function startBgm() {
-    if (!playing) {
-      bgm.play().then(() => {
-        bgmBtn.textContent = '🎵';
-        playing = true;
-      }).catch(() => {});
-    }
-    document.removeEventListener('click', startBgm);
-  }, { once: true });
 </script>
 
 </body>
