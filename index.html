@@ -844,6 +844,29 @@
       display: block;
     }
 
+    /* ── BGM 버튼 ── */
+    .bgm-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--deep);
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+      z-index: 999;
+      transition: transform .2s;
+    }
+
+    .bgm-btn:hover { transform: scale(1.1); }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -862,6 +885,10 @@
   </style>
 </head>
 <body>
+
+<!-- ── BGM ── -->
+<audio id="bgm" src="photos/river.mp3" loop preload="auto"></audio>
+<button class="bgm-btn" id="bgmBtn" onclick="toggleBgm()" title="음악 켜기/끄기">🔇</button>
 
 <!-- ── HERO ── -->
 <section class="hero">
@@ -1371,6 +1398,33 @@
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  // ── BGM
+  const bgm    = document.getElementById('bgm');
+  const bgmBtn = document.getElementById('bgmBtn');
+  let   playing = false;
+
+  function toggleBgm() {
+    if (playing) {
+      bgm.pause();
+      bgmBtn.textContent = '🔇';
+    } else {
+      bgm.play();
+      bgmBtn.textContent = '🎵';
+    }
+    playing = !playing;
+  }
+
+  // 첫 클릭/터치 시 자동재생 시도
+  document.addEventListener('click', function startBgm() {
+    if (!playing) {
+      bgm.play().then(() => {
+        bgmBtn.textContent = '🎵';
+        playing = true;
+      }).catch(() => {});
+    }
+    document.removeEventListener('click', startBgm);
+  }, { once: true });
 </script>
 
 </body>
