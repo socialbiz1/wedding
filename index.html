@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김용환 ♥ 최한솔</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fdf8f3;
+      --blush: #f2e0d5;
+      --rose:  #c9876b;
+      --deep:  #7a4f3a;
+      --gold:  #c8a97e;
+      --text:  #3d2b1f;
+      --muted: #8a7060;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #fff5ee 0%, #fde8dd 50%, #f5d9cb 100%);
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(200,169,126,.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(201,135,107,.12) 0%, transparent 50%);
+    }
+
+    .petal {
+      position: absolute;
+      font-size: 1.4rem;
+      opacity: .18;
+      animation: drift linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes drift {
+      0%   { transform: translateY(-80px) rotate(0deg);   opacity: .18; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0;   }
+    }
+
+    .hero-date-badge {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: .85rem;
+      letter-spacing: .25em;
+      color: var(--rose);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .hero-names {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      color: var(--deep);
+      line-height: 1.1;
+      position: relative;
+      font-weight: 700;
+    }
+
+    .hero-names span { color: var(--rose); }
+
+    .hero-heart {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--rose);
+      margin: 12px 0;
+      display: block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.12); }
+    }
+
+    .hero-sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(.9rem, 2vw, 1.15rem);
+      color: var(--muted);
+      margin-top: 20px;
+      letter-spacing: .08em;
+    }
+
+    /* ── HERO COUPLE PHOTO ── */
+    .hero-photo-wrap {
+      position: relative;
+      margin-top: 36px;
+      z-index: 1;
+    }
+
+    .hero-photo-wrap img {
+      width: clamp(260px, 60vw, 480px);
+      height: clamp(320px, 70vw, 560px);
+      object-fit: cover;
+      border-radius: 240px 240px 200px 200px;
+      box-shadow: 0 20px 60px rgba(122,79,58,.25);
+      border: 6px solid white;
+      display: block;
+    }
+
+    .hero-photo-placeholder {
+      width: clamp(260px, 60vw, 480px);
+      height: clamp(320px, 70vw, 560px);
+      border-radius: 240px 240px 200px 200px;
+      background: linear-gradient(135deg, var(--blush), #e8c9bb);
+      border: 4px dashed var(--rose);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: .9rem;
+      gap: 8px;
+    }
+
+    .hero-photo-placeholder span { font-size: 2.5rem; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      font-size: .75rem;
+      color: var(--muted);
+      letter-spacing: .15em;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 90px 20px; }
+
+    .container { max-width: 780px; margin: 0 auto; }
+
+    .section-label {
+      font-size: .78rem;
+      letter-spacing: .3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      text-align: center;
+      color: var(--deep);
+      margin-bottom: 50px;
+      font-weight: 600;
+    }
+
+    /* ── PROFILE CARDS ── */
+    .profiles { background: white; }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 520px) {
+      .profile-grid { grid-template-columns: 1fr; }
+    }
+
+    .profile-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      border: 1px solid var(--blush);
+    }
+
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blush), var(--rose));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 20px;
+    }
+
+    .profile-name {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.4rem;
+      color: var(--deep);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .profile-birth {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .profile-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 16px;
+    }
+
+    .profile-desc {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── TIMELINE ── */
+    .story { background: var(--cream); }
+
+    .timeline { position: relative; padding-left: 0; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--blush) 10%, var(--blush) 90%, transparent);
+      transform: translateX(-50%);
+    }
+
+    @media (max-width: 600px) {
+      .timeline::before { left: 28px; }
+    }
+
+    .tl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .tl-item:nth-child(even) { flex-direction: row-reverse; }
+
+    @media (max-width: 600px) {
+      .tl-item, .tl-item:nth-child(even) {
+        flex-direction: row;
+        padding-left: 64px;
+      }
+    }
+
+    .tl-dot-wrap {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      .tl-dot-wrap { position: absolute; left: 0; top: 0; }
+    }
+
+    .tl-dot {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--rose);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 16px rgba(201,135,107,.2);
+    }
+
+    .tl-body {
+      flex: 1;
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--blush);
+      box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    }
+
+    .tl-when {
+      font-size: .78rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .tl-title {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.2rem;
+      color: var(--deep);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .tl-text {
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .tl-highlight {
+      display: inline-block;
+      background: var(--blush);
+      color: var(--deep);
+      font-size: .82rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+
+    /* ── PROPOSE GALLERY ── */
+    .gallery-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--blush);
+      border: 2px solid var(--rose);
+      border-radius: 30px;
+      color: var(--deep);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: .88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .gallery-toggle-btn:hover {
+      background: var(--rose);
+      color: white;
+    }
+
+    .gallery-toggle-btn .arrow {
+      display: inline-block;
+      transition: transform .3s;
+    }
+
+    .gallery-toggle-btn.open .arrow { transform: rotate(180deg); }
+
+    .propose-gallery {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .propose-gallery.visible { display: grid; }
+
+    .propose-gallery img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .propose-gallery img:hover { transform: scale(1.03); }
+
+    .propose-gallery .photo-slot {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 10px;
+      border: 2px dashed var(--blush);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: .78rem;
+      gap: 6px;
+      background: var(--cream);
+    }
+
+    .propose-gallery .photo-slot span { font-size: 1.6rem; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 28px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ── WEDDING PLAN ── */
+    .wedding { background: white; }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .plan-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      border: 1px solid var(--blush);
+    }
+
+    .plan-icon { font-size: 2rem; margin-bottom: 12px; }
+
+    .plan-label {
+      font-size: .78rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .plan-value {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.05rem;
+      color: var(--deep);
+      line-height: 1.5;
+    }
+
+    /* ── WEDDING PHOTOS ── */
+    .wedding-photos {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .wedding-photo-block { }
+
+    .wedding-photo-label {
+      font-size: .78rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .wedding-photo-block img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,.08);
+      display: block;
+      cursor: pointer;
+    }
+
+    .wedding-photo-block .photo-slot {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      border: 2px dashed var(--blush);
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: .85rem;
+      gap: 8px;
+    }
+
+    .wedding-photo-block .photo-slot span { font-size: 2rem; }
+
+    .map-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .map-pair { grid-template-columns: 1fr; }
+    }
+
+    .map-pair .photo-slot { height: 180px; }
+    .map-pair img { height: 180px; object-fit: cover; }
+
+    /* ── CHECKLIST ── */
+    .checklist-title {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.15rem;
+      color: var(--deep);
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .checklist {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 480px) {
+      .checklist { grid-template-columns: 1fr; }
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      color: var(--muted);
+      background: var(--cream);
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--blush);
+    }
+
+    .check-icon { font-size: 1.1rem; }
+
+    /* ── COMPLEMENT ── */
+    .complement { background: var(--cream); }
+
+    .complement-intro {
+      text-align: center;
+      font-size: .95rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: -24px auto 48px;
+      line-height: 1.8;
+    }
+
+    .complement-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 560px) {
+      .complement-grid { grid-template-columns: 1fr; }
+    }
+
+    .comp-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 28px;
+      border: 1px solid var(--blush);
+      box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    }
+
+    .comp-card-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--deep);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comp-section-label {
+      font-size: .75rem;
+      letter-spacing: .18em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .comp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .82rem;
+      font-weight: 500;
+    }
+
+    .tag-plus {
+      background: #e8f4e8;
+      color: #3a7a3a;
+      border: 1px solid #b8d8b8;
+    }
+
+    .tag-minus {
+      background: #fdf0e8;
+      color: #8a5230;
+      border: 1px solid #e8c8a8;
+    }
+
+    .complement-summary {
+      background: linear-gradient(135deg, var(--deep) 0%, #5a3828 100%);
+      border-radius: 20px;
+      padding: 36px 32px;
+      color: white;
+      text-align: center;
+    }
+
+    .complement-summary p {
+      font-size: .95rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,.85);
+    }
+
+    .complement-summary strong {
+      color: var(--gold);
+    }
+
+    /* ── FUTURE PLANS ── */
+    .future { background: white; }
+
+    .future-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    @media (max-width: 580px) {
+      .future-grid { grid-template-columns: 1fr; }
+    }
+
+    .future-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 36px 28px;
+      border: 1px solid var(--blush);
+    }
+
+    .future-card-icon { font-size: 2.4rem; margin-bottom: 12px; }
+
+    .future-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--deep);
+      margin-bottom: 20px;
+    }
+
+    .future-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .future-item-dot {
+      flex: 0 0 auto;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--rose);
+      margin-top: 8px;
+    }
+
+    /* 재정 바 차트 */
+    .finance-bar-wrap { margin: 20px 0 8px; }
+
+    .finance-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .finance-bar-track {
+      height: 14px;
+      border-radius: 99px;
+      background: var(--blush);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .finance-bar-deposit {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 99px 0 0 99px;
+      transition: width .8s ease;
+    }
+
+    .finance-bar-invest {
+      height: 100%;
+      background: var(--rose);
+      border-radius: 0 99px 99px 0;
+    }
+
+    .finance-legend {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .finance-legend span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .finance-income-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--deep), #5a3828);
+      color: var(--gold);
+      font-size: .95rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      letter-spacing: .05em;
+    }
+
+    .finance-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--blush);
+      font-size: .9rem;
+    }
+
+    .finance-row:last-child { border-bottom: none; }
+
+    .finance-row-label { color: var(--muted); }
+
+    .finance-row-value {
+      font-weight: 600;
+      color: var(--deep);
+    }
+
+    /* ── D-DAY ── */
+    .dday {
+      background: linear-gradient(135deg, var(--deep) 0%, #4a2c1e 100%);
+      text-align: center;
+      color: white;
+      padding: 80px 20px;
+    }
+
+    .dday-label {
+      font-size: .78rem;
+      letter-spacing: .35em;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .dday-title {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: white;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .dday-sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,.7);
+      margin-bottom: 40px;
+    }
+
+    .dday-counter {
+      display: inline-flex;
+      gap: 24px;
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 24px 40px;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .dday-unit { text-align: center; }
+
+    .dday-num {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      font-weight: 700;
+    }
+
+    .dday-unit-label {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      color: rgba(255,255,255,.5);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--cream);
+      font-size: .82rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+
+    footer strong {
+      color: var(--rose);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <span class="petal" style="left:8%;  animation-duration:12s; animation-delay:0s;">🌸</span>
+  <span class="petal" style="left:22%; animation-duration:15s; animation-delay:2s;">🌷</span>
+  <span class="petal" style="left:55%; animation-duration:11s; animation-delay:4s;">🌸</span>
+  <span class="petal" style="left:75%; animation-duration:14s; animation-delay:1s;">🌺</span>
+  <span class="petal" style="left:90%; animation-duration:13s; animation-delay:3s;">🌸</span>
+
+  <p class="hero-date-badge">Our Story &nbsp;·&nbsp; 2020 — 2026</p>
+  <h1 class="hero-names">김용환<br/><span>최한솔</span></h1>
+  <span class="hero-heart">♥</span>
+  <p class="hero-sub">2026년 9월 12일, 함께 걸어갑니다</p>
+
+  <!-- ★ 커플 사진: photos/couple.jpg 파일 넣으면 자동 표시 -->
+  <div class="hero-photo-wrap">
+    <img src="photos/couple.jpg" alt="김용환 & 최한솔"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+         style="display:block;" />
+    <div class="hero-photo-placeholder" style="display:none;">
+      <span>📷</span>
+      커플 사진<br/><small>photos/couple.jpg</small>
+    </div>
+  </div>
+
+  <p class="hero-scroll">↓ scroll</p>
+</section>
+
+
+<!-- ── PROFILES ── -->
+<section class="profiles">
+  <div class="container">
+    <p class="section-label">두 사람</p>
+    <h2 class="section-title">우리를 소개합니다</h2>
+
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="profile-avatar">🙋‍♂️</div>
+        <p class="profile-name">김용환</p>
+        <p class="profile-birth">1990년생 · 신랑</p>
+        <div class="profile-divider"></div>
+        <p class="profile-desc">
+          활발하고 추진력 있는 성격.<br />
+          패스트파이브에서 일하며<br />
+          한솔을 만나는 운명적 인연을 이어받은 사람.
+        </p>
+      </div>
+      <div class="profile-card">
+        <div class="profile-avatar">🙋‍♀️</div>
+        <p class="profile-name">최한솔</p>
+        <p class="profile-birth">1995년생 · 신부</p>
+        <div class="profile-divider"></div>
+        <p class="profile-desc">
+          밝고 쾌활한 성격에<br />
+          청순한 매력을 가진 사람.<br />
+          친구와 함께한 와인바에서 인연이 시작됐습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── STORY TIMELINE ── -->
+<section class="story">
+  <div class="container">
+    <p class="section-label">우리의 이야기</p>
+    <h2 class="section-title">이렇게 만났습니다</h2>
+
+    <div class="timeline">
+
+      <!-- 1. 만남 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">🍷</div></div>
+        <div class="tl-body">
+          <p class="tl-when">2019년 · 을지로</p>
+          <h3 class="tl-title">운명 같은 첫 만남</h3>
+          <p class="tl-text">
+            용환이 패스트파이브에 다닐 때 같은 회사 동기 <strong>곽상은</strong>씨가
+            을지로에 <strong>302호 와인바</strong>를 오픈했습니다.<br /><br />
+            어느 날 한솔이 친구와 그 와인바를 찾았고,
+            손님이 많지 않던 시간 곽상은 사장님과 이런저런 이야기를 나누다
+            한솔이 자신이 좋아하는 스타일을 이야기하게 됩니다.<br /><br />
+            그 순간, 사장님은 용환에게 전화를 걸었습니다.<br />
+            <em>"소개받을래요?"</em>
+          </p>
+          <span class="tl-highlight">📞 용환은 그때 헬스장에서 스쿼트 중이었습니다</span>
+        </div>
+      </div>
+
+      <!-- 2. 첫인상 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">💫</div></div>
+        <div class="tl-body">
+          <p class="tl-when">첫 만남</p>
+          <h3 class="tl-title">기대 이상의 첫인상</h3>
+          <p class="tl-text">
+            용환은 처음에 한솔이 소개팅 앱을 많이 써서
+            실물이 사진과 다를 수도 있겠다 싶었습니다.<br /><br />
+            하지만 직접 만난 한솔은 오히려 <strong>청순하고 예뻤고</strong>,
+            성격도 밝고 쾌활해서 금세 마음이 끌렸습니다.
+          </p>
+          <span class="tl-highlight">✨ 기대를 훌쩍 뛰어넘은 첫 만남</span>
+        </div>
+      </div>
+
+      <!-- 3. 사귀기 시작 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">💑</div></div>
+        <div class="tl-body">
+          <p class="tl-when">2020년 12월 4일</p>
+          <h3 class="tl-title">우리 사귀어요</h3>
+          <p class="tl-text">
+            만남을 이어오던 두 사람, 2020년 12월 4일
+            드디어 공식적으로 연인이 되었습니다.<br /><br />
+            그날부터 지금까지, 서로의 가장 가까운 사람으로
+            함께 걸어왔습니다.
+          </p>
+          <span class="tl-highlight">❤️ 교제 시작 후 약 5년 4개월</span>
+        </div>
+      </div>
+
+      <!-- 4. 프로포즈 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">💍</div></div>
+        <div class="tl-body">
+          <p class="tl-when">2025년 5월 7일 · 나트랑</p>
+          <h3 class="tl-title">평생 함께하자는 약속</h3>
+          <p class="tl-text">
+            한솔의 생일을 맞아 함께 베트남 <strong>나트랑</strong>으로 여행을 떠났습니다.<br /><br />
+            푸른 바다가 보이는 그곳에서 용환은 준비해 온 반지를 꺼내
+            한솔에게 프로포즈했습니다.<br /><br />
+            생일 선물보다 더 특별한, 평생을 함께하자는 진심 어린 약속이었습니다.
+          </p>
+
+          <!-- ★ 사진 토글 버튼 -->
+          <button class="gallery-toggle-btn" id="proposeBtn" onclick="toggleGallery()">
+            📷 나트랑 프로포즈 사진 보기 (8장) <span class="arrow">▼</span>
+          </button>
+
+          <!-- ★ 갤러리: photos/propose_1.jpg ~ propose_8.jpg -->
+          <div class="propose-gallery" id="proposeGallery">
+            <img src="photos/propose_1.jpg" alt="프로포즈 1"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_1.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_2.jpg" alt="프로포즈 2"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_2.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_3.jpg" alt="프로포즈 3"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_3.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_4.jpg" alt="프로포즈 4"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_4.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_5.jpg" alt="프로포즈 5"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_5.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_6.jpg" alt="프로포즈 6"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_6.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_7.jpg" alt="프로포즈 7"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_7.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_8.jpg" alt="프로포즈 8"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_8.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── WEDDING PLAN ── -->
+<section class="wedding">
+  <div class="container">
+    <p class="section-label">결혼 준비</p>
+    <h2 class="section-title">이렇게 준비하고 있습니다</h2>
+
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="plan-icon">📅</div>
+        <p class="plan-label">결혼식 날짜</p>
+        <p class="plan-value">2026년<br/>9월 12일</p>
+      </div>
+      <div class="plan-card">
+        <div class="plan-icon">🏛️</div>
+        <p class="plan-label">예식 장소</p>
+        <p class="plan-value">강남<br/>브라이튼 하우스</p>
+      </div>
+      <div class="plan-card">
+        <div class="plan-icon">🏠</div>
+        <p class="plan-label">신혼집</p>
+        <p class="plan-value">2026년 5월~<br/>탐색 예정</p>
+      </div>
+      <div class="plan-card">
+        <div class="plan-icon">✈️</div>
+        <p class="plan-label">신혼여행</p>
+        <p class="plan-value">스페인<br/>예약 완료</p>
+      </div>
+    </div>
+
+    <p class="checklist-title">준비 현황</p>
+    <ul class="checklist">
+      <li><span class="check-icon">✅</span> 예식장 예약 완료</li>
+      <li><span class="check-icon">✅</span> 스드메 (스튜디오·드레스·메이크업)</li>
+      <li><span class="check-icon">✅</span> 신혼여행 예약 완료</li>
+      <li><span class="check-icon">🔜</span> 신혼집 (5월부터 본격 탐색)</li>
+    </ul>
+
+    <!-- ★ 결혼 준비 사진들 -->
+    <div class="wedding-photos">
+
+      <!-- 브라이튼 하우스 -->
+      <div class="wedding-photo-block">
+        <p class="wedding-photo-label">🏛️ 예식장 — 강남 브라이튼 하우스</p>
+        <img src="photos/brighton.jpg" alt="브라이튼 하우스"
+             onerror="this.outerHTML='<div class=\'photo-slot\'><span>🏛️</span>photos/brighton.jpg</div>'"
+             onclick="openLightbox(this.src)" />
+      </div>
+
+      <!-- 수지구 지도 -->
+      <div class="wedding-photo-block">
+        <p class="wedding-photo-label">📍 신혼집 예정 위치 — 수지구</p>
+        <div class="map-pair">
+          <div>
+            <img src="photos/map_home.jpg" alt="수지구 지도"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📍</span>map_home.jpg<br/><small>수지구 네이버지도</small></div>'"
+                 onclick="openLightbox(this.src)" />
+          </div>
+          <div>
+            <img src="photos/map_commute.jpg" alt="출퇴근 경로"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>🚇</span>map_commute.jpg<br/><small>출퇴근 네이버지도</small></div>'"
+                 onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 신혼여행 스페인 -->
+      <div class="wedding-photo-block">
+        <p class="wedding-photo-label">✈️ 신혼여행 — 스페인</p>
+        <img src="photos/honeymoon.jpg" alt="스페인 신혼여행"
+             onerror="this.outerHTML='<div class=\'photo-slot\'><span>✈️</span>photos/honeymoon.jpg</div>'"
+             onclick="openLightbox(this.src)" />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── COMPLEMENT ── -->
+<section class="complement">
+  <div class="container">
+    <p class="section-label">우리가 잘 맞는 이유</p>
+    <h2 class="section-title">서로의 부족함을 채워주는 사이</h2>
+    <p class="complement-intro">
+      완벽한 사람은 없습니다.<br />
+      하지만 서로의 빈자리를 채워줄 수 있는 사람은 있습니다.<br />
+      두 사람이 바로 그런 사이입니다.
+    </p>
+
+    <div class="complement-grid">
+      <!-- 용환 카드 -->
+      <div class="comp-card">
+        <p class="comp-card-name">🙋‍♂️ 김용환</p>
+
+        <p class="comp-section-label">STRENGTHS · 장점</p>
+        <div class="comp-tags">
+          <span class="tag tag-plus">추진력</span>
+          <span class="tag tag-plus">결단력</span>
+          <span class="tag tag-plus">책임감</span>
+          <!-- ★ 여기에 용환님 장점 추가/수정 -->
+        </div>
+
+        <p class="comp-section-label">WEAKNESSES · 부족한 점</p>
+        <div class="comp-tags">
+          <span class="tag tag-minus">꼼꼼함 부족</span>
+          <span class="tag tag-minus">감정 표현 서툼</span>
+          <!-- ★ 여기에 용환님 단점 추가/수정 -->
+        </div>
+      </div>
+
+      <!-- 한솔 카드 -->
+      <div class="comp-card">
+        <p class="comp-card-name">🙋‍♀️ 최한솔</p>
+
+        <p class="comp-section-label">STRENGTHS · 장점</p>
+        <div class="comp-tags">
+          <span class="tag tag-plus">꼼꼼함</span>
+          <span class="tag tag-plus">따뜻한 공감력</span>
+          <span class="tag tag-plus">밝은 에너지</span>
+          <!-- ★ 여기에 한솔님 장점 추가/수정 -->
+        </div>
+
+        <p class="comp-section-label">WEAKNESSES · 부족한 점</p>
+        <div class="comp-tags">
+          <span class="tag tag-minus">우유부단함</span>
+          <span class="tag tag-minus">결정을 어려워함</span>
+          <!-- ★ 여기에 한솔님 단점 추가/수정 -->
+        </div>
+      </div>
+    </div>
+
+    <div class="complement-summary">
+      <p>
+        용환은 <strong>결단력과 추진력</strong>으로 앞을 이끌고,<br />
+        한솔은 <strong>꼼꼼함과 따뜻한 공감력</strong>으로 곁을 채웁니다.<br /><br />
+        서로 다르기에 더 단단하고,<br />
+        서로 다르기에 더 오래 함께할 수 있습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FUTURE PLANS ── -->
+<section class="future">
+  <div class="container">
+    <p class="section-label">앞으로의 계획</p>
+    <h2 class="section-title">함께 만들어갈 미래</h2>
+
+    <div class="future-grid">
+
+      <!-- 자녀 계획 -->
+      <div class="future-card">
+        <div class="future-card-icon">👶</div>
+        <p class="future-card-title">자녀 계획</p>
+
+        <div class="future-item">
+          <div class="future-item-dot"></div>
+          <div>
+            <strong>1명 이상</strong> — 되는 대로 자연스럽게,<br />
+            숫자보다 건강하고 행복한 가정을 먼저 생각합니다.
+          </div>
+        </div>
+        <div class="future-item">
+          <div class="future-item-dot"></div>
+          <div>
+            결혼 직후 또는 <strong>6개월 뒤</strong>부터 계획 시작.<br />
+            두 사람이 충분히 적응한 뒤 함께 결정합니다.
+          </div>
+        </div>
+        <div class="future-item">
+          <div class="future-item-dot"></div>
+          <div>
+            육아는 함께, 어느 한쪽에만 맡기지 않는<br />
+            <strong>공동 육아</strong>를 원칙으로 합니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- 재정 계획 -->
+      <div class="future-card">
+        <div class="future-card-icon">💰</div>
+        <p class="future-card-title">재정 계획</p>
+
+        <div class="finance-row">
+          <span class="finance-row-label">각자 용돈</span>
+          <span class="finance-row-value">60만원 × 2</span>
+        </div>
+        <div class="finance-row">
+          <span class="finance-row-label">나머지는 공동 관리</span>
+          <span class="finance-row-value">최대한 저축</span>
+        </div>
+
+        <div class="finance-bar-wrap">
+          <div class="finance-bar-label">
+            <span>저축 방향</span>
+            <span>예금 33% &nbsp;/&nbsp; 투자 67%</span>
+          </div>
+          <div class="finance-bar-track">
+            <div class="finance-bar-deposit" style="width:33%"></div>
+            <div class="finance-bar-invest"   style="width:67%"></div>
+          </div>
+          <div class="finance-legend">
+            <span><i class="legend-dot" style="background:var(--gold)"></i>예금 (안전 자산) 33%</span>
+            <span><i class="legend-dot" style="background:var(--rose)"></i>투자 (성장 자산) 67%</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── D-DAY ── -->
+<section class="dday">
+  <p class="dday-label">Wedding Countdown</p>
+  <h2 class="dday-title">D-Day</h2>
+  <p class="dday-sub">2026년 9월 12일 · 강남 브라이튼 하우스</p>
+  <div class="dday-counter" id="countdown">
+    <div class="dday-unit">
+      <span class="dday-num" id="cd-days">--</span>
+      <span class="dday-unit-label">DAYS</span>
+    </div>
+    <div class="dday-unit">
+      <span class="dday-num" id="cd-hours">--</span>
+      <span class="dday-unit-label">HOURS</span>
+    </div>
+    <div class="dday-unit">
+      <span class="dday-num" id="cd-mins">--</span>
+      <span class="dday-unit-label">MINS</span>
+    </div>
+    <div class="dday-unit">
+      <span class="dday-num" id="cd-secs">--</span>
+      <span class="dday-unit-label">SECS</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p style="font-size:1.5rem; margin-bottom:12px;">🌸</p>
+  <p><strong>김용환 ♥ 최한솔</strong></p>
+  <p style="margin-top:8px;">두 사람의 새로운 시작을 지켜봐 주셔서 감사합니다.</p>
+</footer>
+
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+
+<script>
+  // ── 나트랑 갤러리 토글
+  function toggleGallery() {
+    const gallery = document.getElementById('proposeGallery');
+    const btn     = document.getElementById('proposeBtn');
+    const isOpen  = gallery.classList.contains('visible');
+    gallery.classList.toggle('visible', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    btn.innerHTML = isOpen
+      ? '📷 나트랑 프로포즈 사진 보기 (8장) <span class="arrow">▼</span>'
+      : '📷 나트랑 프로포즈 사진 닫기 <span class="arrow">▼</span>';
+  }
+
+  // ── 라이트박스
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // ── D-Day 카운트다운
+  function updateCountdown() {
+    const wedding = new Date('2026-09-12T00:00:00');
+    const now     = new Date();
+    const diff    = wedding - now;
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<p style="color:var(--gold);font-size:2rem;">결혼식 당일입니다 🎉</p>';
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000)    / 1000);
+
+    document.getElementById('cd-days').textContent  = String(days).padStart(3,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2,'0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
