@@ -990,7 +990,25 @@
         </div>
       </div>
 
-      <!-- 2. 첫인상 (한솔 → 용환) -->
+      <!-- 2. 첫인상 (용환 → 한솔) -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">🙋‍♂️</div></div>
+        <div class="tl-body">
+          <p class="tl-when">첫 만남 · 용환의 기억</p>
+          <h3 class="tl-title">"자꾸 챙겨주고 싶은 사람이었어"</h3>
+          <p class="tl-text">
+            처음 봤을 때 청순한 외모에 끌렸고,<br />
+            밝고 쾌활한 성격에 더욱 마음이 갔습니다.<br /><br />
+            쇼핑몰을 한다는 이야기에 예전 자신의 모습이 떠올랐고,<br />
+            그래서인지 이야기가 유독 잘 통했습니다.<br /><br />
+            타지에서 혼자 고생하며 열심히 살아가는 모습이<br />
+            안쓰럽기도 하고, 더 챙겨주고 싶다는 마음이 자연스레 생겼습니다.
+          </p>
+          <span class="tl-highlight">💛 그게 사랑의 시작이었습니다</span>
+        </div>
+      </div>
+
+      <!-- 3. 첫인상 (한솔 → 용환) -->
       <div class="tl-item">
         <div class="tl-dot-wrap"><div class="tl-dot">💫</div></div>
         <div class="tl-body">
@@ -1045,22 +1063,28 @@
 
           <!-- ★ 사진 토글 버튼 -->
           <button class="gallery-toggle-btn" id="proposeBtn" onclick="toggleGallery()">
-            📷 나트랑 프로포즈 사진 보기 (4장) <span class="arrow">▼</span>
+            📷 나트랑 프로포즈 사진 보기 (6장) <span class="arrow">▼</span>
           </button>
 
-          <!-- ★ 갤러리: photos/propose_3.jpg ~ propose_6.jpg -->
+          <!-- ★ 갤러리: photos/propose_3.jpg ~ propose_8.jpg -->
           <div class="propose-gallery" id="proposeGallery">
             <img src="photos/propose_3.jpg" alt="프로포즈 1"
                  onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_3.jpg</div>'"
                  onclick="openLightbox(this.src)" />
-            <img src="photos/propose_4.jpg" alt="프로포즈 4"
+            <img src="photos/propose_4.jpg" alt="프로포즈 2"
                  onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_4.jpg</div>'"
                  onclick="openLightbox(this.src)" />
-            <img src="photos/propose_5.jpg" alt="프로포즈 5"
+            <img src="photos/propose_5.jpg" alt="프로포즈 3"
                  onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_5.jpg</div>'"
                  onclick="openLightbox(this.src)" />
-            <img src="photos/propose_6.jpg" alt="프로포즈 6"
+            <img src="photos/propose_6.jpg" alt="프로포즈 4"
                  onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_6.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_7.jpg" alt="프로포즈 5"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_7.jpg</div>'"
+                 onclick="openLightbox(this.src)" />
+            <img src="photos/propose_8.jpg" alt="프로포즈 6"
+                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_8.jpg</div>'"
                  onclick="openLightbox(this.src)" />
           </div>
         </div>
@@ -1168,6 +1192,7 @@
         <div class="comp-tags">
           <span class="tag tag-minus">꼼꼼함 부족</span>
           <span class="tag tag-minus">감정 표현 서툼</span>
+          <span class="tag tag-minus">자존심이 셈</span>
           <!-- ★ 여기에 용환님 단점 추가/수정 -->
         </div>
       </div>
@@ -1309,6 +1334,16 @@
 </section>
 
 
+<!-- ── LAST PHOTO ── -->
+<section style="background:var(--cream); padding:0 20px 80px;">
+  <div style="max-width:780px; margin:0 auto;">
+    <img src="photos/last.jpg" alt="김용환 & 최한솔"
+         style="width:100%; border-radius:24px; box-shadow:0 8px 32px rgba(0,0,0,.1); display:block; cursor:pointer;"
+         onerror="this.style.display='none'"
+         onclick="openLightbox(this.src)" />
+  </div>
+</section>
+
 <!-- ── FOOTER ── -->
 <footer>
   <p style="font-size:1.5rem; margin-bottom:12px;">🌸</p>
@@ -1333,7 +1368,7 @@
     gallery.classList.toggle('visible', !isOpen);
     btn.classList.toggle('open', !isOpen);
     btn.innerHTML = isOpen
-      ? '📷 나트랑 프로포즈 사진 보기 (4장) <span class="arrow">▼</span>'
+      ? '📷 나트랑 프로포즈 사진 보기 (6장) <span class="arrow">▼</span>'
       : '📷 나트랑 프로포즈 사진 닫기 <span class="arrow">▼</span>';
   }
 
