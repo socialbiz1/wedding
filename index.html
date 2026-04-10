@@ -946,7 +946,7 @@
         <p class="profile-desc">
           밝고 쾌활한 성격에<br />
           청순한 매력을 가진 사람.<br />
-          가을날 와인바에서 우리의 인연이 시작됐습니다.
+          용환과의 행복한 결혼생활을 꿈꿉니다.
         </p>
       </div>
     </div>
@@ -1036,18 +1036,12 @@
 
           <!-- ★ 사진 토글 버튼 -->
           <button class="gallery-toggle-btn" id="proposeBtn" onclick="toggleGallery()">
-            📷 나트랑 프로포즈 사진 보기 (6장) <span class="arrow">▼</span>
+            📷 나트랑 프로포즈 사진 보기 (4장) <span class="arrow">▼</span>
           </button>
 
-          <!-- ★ 갤러리: photos/propose_1.jpg ~ propose_6.jpg -->
+          <!-- ★ 갤러리: photos/propose_3.jpg ~ propose_6.jpg -->
           <div class="propose-gallery" id="proposeGallery">
-            <img src="photos/propose_1.jpg" alt="프로포즈 1"
-                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_1.jpg</div>'"
-                 onclick="openLightbox(this.src)" />
-            <img src="photos/propose_2.jpg" alt="프로포즈 2"
-                 onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_2.jpg</div>'"
-                 onclick="openLightbox(this.src)" />
-            <img src="photos/propose_3.jpg" alt="프로포즈 3"
+            <img src="photos/propose_3.jpg" alt="프로포즈 1"
                  onerror="this.outerHTML='<div class=\'photo-slot\'><span>📷</span>propose_3.jpg</div>'"
                  onclick="openLightbox(this.src)" />
             <img src="photos/propose_4.jpg" alt="프로포즈 4"
@@ -1330,7 +1324,7 @@
     gallery.classList.toggle('visible', !isOpen);
     btn.classList.toggle('open', !isOpen);
     btn.innerHTML = isOpen
-      ? '📷 나트랑 프로포즈 사진 보기 (8장) <span class="arrow">▼</span>'
+      ? '📷 나트랑 프로포즈 사진 보기 (4장) <span class="arrow">▼</span>'
       : '📷 나트랑 프로포즈 사진 닫기 <span class="arrow">▼</span>';
   }
 
