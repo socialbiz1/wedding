@@ -38,6 +38,9 @@
       background: #ece4dc;
       color: var(--text);
       line-height: 1.75;
+      /* 한국어 단어 단위 줄바꿈 */
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
 
     /* ── 모바일 청첩장 컨테이너: 데스크탑에서도 폰 폭 ── */
@@ -51,12 +54,16 @@
     }
 
     /* ── 공통 ── */
-    section { padding: 70px 24px; }
+    section { padding: 60px 20px; }
+
+    @media (max-width: 360px) {
+      section { padding: 50px 16px; }
+    }
     .container { width: 100%; }
 
     .label {
       font-family: var(--serif);
-      font-size: .78rem;
+      font-size: clamp(.68rem, 2.2vw, .78rem);
       letter-spacing: .35em;
       color: var(--gold);
       text-transform: uppercase;
@@ -66,7 +73,7 @@
 
     .title {
       font-family: var(--serif);
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 5vw, 1.5rem);
       text-align: center;
       color: var(--deep);
       margin-bottom: 36px;
@@ -216,7 +223,7 @@
 
     .greeting-text {
       font-family: var(--serif);
-      font-size: 1rem;
+      font-size: clamp(.92rem, 3.5vw, 1rem);
       line-height: 2.2;
       color: var(--text);
       letter-spacing: .02em;
@@ -263,7 +270,7 @@
 
     .person-name {
       font-family: var(--serif);
-      font-size: 1.6rem;
+      font-size: clamp(1.35rem, 5.5vw, 1.6rem);
       color: var(--deep);
       font-weight: 700;
       margin-bottom: 14px;
@@ -374,7 +381,7 @@
 
     .event-date-big {
       font-family: var(--serif);
-      font-size: 2.6rem;
+      font-size: clamp(2rem, 8vw, 2.6rem);
       color: var(--deep);
       font-weight: 700;
       letter-spacing: .04em;
@@ -553,10 +560,11 @@
     }
 
     .transport-text {
-      font-size: .85rem;
+      font-size: clamp(.8rem, 3vw, .85rem);
       color: var(--muted);
       line-height: 1.7;
       padding-left: 26px;
+      word-break: keep-all;
     }
 
     /* ────────── ⑦ D-DAY ────────── */
@@ -577,7 +585,7 @@
 
     .dday-title {
       font-family: var(--serif);
-      font-size: 2.4rem;
+      font-size: clamp(1.8rem, 7vw, 2.4rem);
       color: white;
       margin-bottom: 12px;
       font-weight: 700;
@@ -1052,8 +1060,7 @@
         <p class="person-role">GROOM · 신랑</p>
         <p class="person-name">김 용 환<small>YONG HWAN KIM</small></p>
         <div class="contact-row">
-          <a href="tel:01024660762" class="contact-btn"><span class="ic">📞</span> 전화</a>
-          <a href="sms:01024660762" class="contact-btn"><span class="ic">💬</span> 문자</a>
+          <a href="sms:01024660762" class="contact-btn"><span class="ic">💬</span> 문자하기</a>
         </div>
       </div>
 
@@ -1065,8 +1072,7 @@
         <p class="person-role">BRIDE · 신부</p>
         <p class="person-name">최 한 솔<small>HAN SOL CHOI</small></p>
         <div class="contact-row">
-          <a href="tel:01023267049" class="contact-btn"><span class="ic">📞</span> 전화</a>
-          <a href="sms:01023267049" class="contact-btn"><span class="ic">💬</span> 문자</a>
+          <a href="sms:01023267049" class="contact-btn"><span class="ic">💬</span> 문자하기</a>
         </div>
       </div>
 
