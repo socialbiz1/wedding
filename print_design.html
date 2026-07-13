@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>김용환 ♥ 최한솔 · 청첩장 인쇄 시안 (3단 접지 120×360mm)</title>
+
+<!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fonts: English Serif (Cormorant + Italiana) + Korean Myeongjo (Noto Serif KR + Nanum Myeongjo) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Italiana&family=Cardo:ital,wght@0,400;0,700;1,400&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* 인쇄용 정확 치수 (1mm = 3.7795px @96dpi 기준이지만, 화면 미리보기는 scale로 축소) */
+    --paper:       #FAF7F2;   /* 웜화이트 매트지 */
+    --paper-edge:  #ECE7DE;   /* 종이 가장자리 그림자용 */
+    --ink:         #1F1B17;   /* 진잉크 */
+    --ink-soft:    #4A433C;   /* 본문 잉크 */
+    --ink-mute:    #8B7F73;   /* 캡션·라벨용 */
+    --hair:        #C9BFB1;   /* 헤어라인 */
+    --gold:        #B89968;   /* 미세 골드 포인트 */
+
+    --serif-en:   'Cormorant Garamond', 'Cardo', serif;
+    --display-en: 'Italiana', 'Cormorant Garamond', serif;
+    --serif-kr:   'Noto Serif KR', 'Nanum Myeongjo', serif;
+  }
+
+  html, body {
+    background: #ECE7DF;
+    color: var(--ink);
+    font-family: var(--serif-kr);
+  }
+
+  /* ────────── 종이 (실제 인쇄 치수: 120 × 360 mm) ────────── */
+  .paper {
+    width: 120mm;
+    height: 360mm;
+    background: var(--paper);
+    box-shadow:
+      0 1px 0 rgba(0,0,0,.04),
+      0 30px 60px rgba(0,0,0,.18),
+      0 6px 14px rgba(0,0,0,.08);
+    position: relative;
+    overflow: hidden;
+    /* 종이 미세 질감 */
+    background-image:
+      radial-gradient(ellipse at top, rgba(255,255,255,.4), transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(184,153,104,.04), transparent 70%);
+  }
+
+  /* 칸 분할: 정확히 3등분 = 120mm 씩 */
+  .panel {
+    height: 120mm;
+    width: 120mm;
+    padding: 12mm;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 오시선 (접는 점선) */
+  .fold-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 0;
+    border-top: 1px dashed rgba(184,153,104,.55);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .fold-line.top { top: 120mm; }
+  .fold-line.bot { top: 240mm; }
+  .fold-label {
+    position: absolute;
+    right: 4mm;
+    transform: translateY(-50%);
+    font-family: var(--serif-en);
+    font-size: 7pt;
+    letter-spacing: .22em;
+    color: var(--gold);
+    background: var(--paper);
+    padding: 0 4px;
+    text-transform: uppercase;
+  }
+
+  /* 표지(상단 칸)는 인쇄 원고 상태에서 180도 회전 */
+  .cover-flip { transform: rotate(180deg); }
+
+  /* ────────── 타이포 시스템 (캔바 이관 기준) ────────── */
+  .t-eyebrow {
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 10pt;
+    letter-spacing: .18em;
+    color: var(--ink-mute);
+  }
+  .t-eyebrow-cap {
+    font-family: var(--serif-en);
+    font-weight: 400;
+    font-size: 8pt;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .t-title-en {
+    font-family: var(--display-en);
+    font-weight: 400;
+    font-size: 26pt;
+    letter-spacing: .04em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .t-names-en {
+    font-family: var(--serif-en);
+    font-weight: 400;
+    font-size: 13pt;
+    letter-spacing: .35em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .t-body-kr {
+    font-family: var(--serif-kr);
+    font-weight: 400;
+    font-size: 9pt;
+    letter-spacing: .02em;
+    line-height: 2.05;
+    color: var(--ink-soft);
+  }
+  .t-parents {
+    font-family: var(--serif-kr);
+    font-weight: 400;
+    font-size: 8.5pt;
+    letter-spacing: .05em;
+    color: var(--ink-soft);
+  }
+  .t-parents .child {
+    font-weight: 700;
+    color: var(--ink);
+    margin-left: 6px;
+    letter-spacing: .12em;
+  }
+  .t-date-display {
+    font-family: var(--serif-en);
+    font-weight: 400;
+    font-size: 14pt;
+    letter-spacing: .25em;
+    color: var(--ink);
+  }
+  .t-venue-kr {
+    font-family: var(--serif-kr);
+    font-weight: 600;
+    font-size: 9.5pt;
+    letter-spacing: .12em;
+    color: var(--ink);
+  }
+  .t-meta {
+    font-family: var(--serif-kr);
+    font-weight: 300;
+    font-size: 7.5pt;
+    letter-spacing: .06em;
+    color: var(--ink-mute);
+  }
+  .t-meta-en {
+    font-family: var(--serif-en);
+    font-weight: 400;
+    font-size: 7.5pt;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .hair {
+    height: 1px;
+    background: var(--hair);
+    width: 100%;
+  }
+  .hair-short {
+    height: 1px;
+    background: var(--hair);
+    width: 14mm;
+    margin: 0 auto;
+  }
+
+  /* ────────── ① 인사말 패널 ────────── */
+  .panel-invitation {
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    padding-top: 14mm;
+    padding-bottom: 14mm;
+  }
+
+  /* ────────── ② 사진 플레이스홀더 ────────── */
+  .photo-frame {
+    position: absolute;
+    inset: 8mm;
+    background:
+      linear-gradient(135deg, #D9CFC0 0%, #BFB29F 50%, #A0907B 100%);
+    overflow: hidden;
+  }
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 45%),
+      radial-gradient(circle at 75% 85%, rgba(0,0,0,.18), transparent 50%);
+  }
+  .photo-frame .ph-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-size: 10pt;
+    letter-spacing: .2em;
+    color: rgba(255,255,255,.85);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* ────────── ③ 정보 패널 ────────── */
+  .panel-info {
+    text-align: center;
+    justify-content: space-between;
+    padding-top: 12mm;
+    padding-bottom: 12mm;
+  }
+
+  .map-placeholder {
+    width: 100%;
+    height: 22mm;
+    border: 0.4mm solid var(--hair);
+    background:
+      linear-gradient(180deg, #F2EDE3 0%, #E8DFD0 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, transparent 49.7%, rgba(184,153,104,.35) 49.7%, rgba(184,153,104,.35) 50.3%, transparent 50.3%),
+      linear-gradient(0deg,  transparent 49.7%, rgba(184,153,104,.25) 49.7%, rgba(184,153,104,.25) 50.3%, transparent 50.3%);
+  }
+  .map-pin {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -100%);
+    color: var(--gold);
+    font-size: 11pt;
+  }
+  .map-cap {
+    position: absolute;
+    bottom: 1.5mm; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-size: 6.5pt;
+    letter-spacing: .15em;
+    color: var(--ink-mute);
+  }
+
+  .qr-placeholder {
+    width: 14mm;
+    height: 14mm;
+    background:
+      repeating-conic-gradient(var(--ink) 0% 25%, transparent 0% 50%) 0 0 / 1.4mm 1.4mm;
+    border: 0.3mm solid var(--ink);
+  }
+
+  /* ────────── ④ 표지 (180° 반전된 상태) ────────── */
+  .panel-cover {
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    padding-top: 16mm;
+    padding-bottom: 16mm;
+  }
+  .wax-area {
+    width: 28mm;
+    height: 28mm;
+    border: 1px dashed var(--hair);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-size: 6.5pt;
+    letter-spacing: .15em;
+    color: var(--ink-mute);
+    background: rgba(255,255,255,.3);
+  }
+
+  /* ────────── ⑤ 뒷면 ────────── */
+  .panel-back {
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    padding-bottom: 16mm;
+  }
+
+  /* ────────── ⑥ 서브 커버 ────────── */
+  .panel-sub {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* ────────── 화면 미리보기용 스케일 ────────── */
+  .stage {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 40px 80px;
+    transform: scale(.85);
+    transform-origin: top center;
+  }
+  @media (max-width: 1200px) {
+    .stage { transform: scale(.7); }
+  }
+  @media (max-width: 900px) {
+    .stage { transform: scale(.5); }
+  }
+  @media (max-width: 600px) {
+    .stage { transform: scale(.32); }
+  }
+
+  .paper-label {
+    font-family: var(--serif-en);
+    text-align: center;
+    letter-spacing: .35em;
+    font-size: 11pt;
+    color: #4A433C;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .paper-sub {
+    text-align: center;
+    font-family: var(--serif-kr);
+    font-size: 11pt;
+    color: #8B7F73;
+    margin-bottom: 36px;
+  }
+
+  /* 사이드 가이드(스펙) 패널 */
+  .spec-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    background: #1F1B17;
+    color: #FAF7F2;
+    border: none;
+    padding: 10px 18px;
+    font-family: var(--serif-en);
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 999px;
+  }
+  .spec-panel {
+    position: fixed;
+    top: 0; right: -440px;
+    width: 420px;
+    max-width: 92vw;
+    height: 100vh;
+    background: #FAF7F2;
+    box-shadow: -20px 0 50px rgba(0,0,0,.18);
+    padding: 32px 28px;
+    overflow-y: auto;
+    transition: right .4s ease;
+    z-index: 99;
+    font-family: var(--serif-kr);
+  }
+  .spec-panel.open { right: 0; }
+  .spec-panel h2 {
+    font-family: var(--display-en);
+    font-size: 22pt;
+    color: #1F1B17;
+    margin-bottom: 4px;
+  }
+  .spec-panel h3 {
+    font-family: var(--serif-en);
+    font-size: 9pt;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: #B89968;
+    margin: 22px 0 8px;
+  }
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 11pt;
+    border-bottom: 1px solid #ECE7DE;
+  }
+  .spec-row .k { color: #4A433C; }
+  .spec-row .v { color: #1F1B17; font-weight: 500; }
+  .spec-panel code {
+    background: #F0EBE2;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 9pt;
+    color: #6B5E4F;
+  }
+  .spec-close {
+    position: absolute;
+    top: 22px; right: 22px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #1F1B17;
+    cursor: pointer;
+  }
+
+  /* 인쇄 모드 */
+  @media print {
+    body { background: white; }
+    .stage { transform: none; padding: 0; gap: 0; }
+    .paper-label, .paper-sub, .spec-toggle, .spec-panel, .global-header { display: none; }
+    .paper { box-shadow: none; }
+    @page { size: 120mm 360mm; margin: 0; }
+  }
+
+  .global-header {
+    text-align: center;
+    padding: 50px 20px 0;
+  }
+  .global-header h1 {
+    font-family: var(--display-en);
+    font-size: 28pt;
+    color: #1F1B17;
+    letter-spacing: .05em;
+    margin-bottom: 6px;
+  }
+  .global-header p {
+    font-family: var(--serif-kr);
+    color: #8B7F73;
+    font-size: 11pt;
+    letter-spacing: .15em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ────────── Header ────────── -->
+<header class="global-header">
+  <h1>The Wedding Day — Print Layout</h1>
+  <p>김용환 &amp; 최한솔 · 3단 접지 청첩장 인쇄 시안 · 120 × 360 mm</p>
+</header>
+
+<!-- ────────── 캔바 스펙 토글 버튼 ────────── -->
+<button class="spec-toggle" onclick="document.getElementById('specPanel').classList.toggle('open')">
+  Canva Spec
+</button>
+
+<!-- ────────── 시안 (안쪽면 / 바깥면 나란히) ────────── -->
+<div class="stage">
+
+  <!-- ══════════════════ FACE 1 : 펼친 안쪽면 ══════════════════ -->
+  <div>
+    <p class="paper-label">Face 1 · Inside</p>
+    <p class="paper-sub">펼쳤을 때 안쪽 — 3칸 모두 정방향</p>
+
+    <div class="paper">
+
+      <!-- 오시선 -->
+      <div class="fold-line top"><span class="fold-label">Fold</span></div>
+      <div class="fold-line bot"><span class="fold-label">Fold</span></div>
+
+      <!-- ① 인사말 -->
+      <section class="panel panel-invitation">
+        <div>
+          <p class="t-eyebrow">Invitation</p>
+          <div class="hair-short mt-3"></div>
+        </div>
+
+        <p class="t-body-kr">
+          서로 마주보며 다져온 사랑을<br/>
+          이제 함께 한 곳을 바라보며 걸어갈<br/>
+          큰 사랑으로 키우고자 합니다.<br/><br/>
+          귀한 걸음으로 축복해 주시면<br/>
+          더없는 기쁨이겠습니다.
+        </p>
+
+        <div class="w-full">
+          <div class="hair-short mb-4"></div>
+          <p class="t-parents">김길수 · 유미숙 의 장남 <span class="child">김 용 환</span></p>
+          <p class="t-parents mt-1">최경주 · 노춘자 의 차녀 <span class="child">최 한 솔</span></p>
+        </div>
+      </section>
+
+      <!-- ② 사진 -->
+      <section class="panel" style="padding: 0;">
+        <div class="photo-frame">
+          <p class="ph-label">— Wedding Photo —<br/>120 × 120 mm</p>
+        </div>
+      </section>
+
+      <!-- ③ 정보 -->
+      <section class="panel panel-info">
+        <div>
+          <p class="t-eyebrow-cap">Wedding Day</p>
+          <div class="hair-short mt-3"></div>
+        </div>
+
+        <div>
+          <p class="t-date-display">2026 . 09 . 12</p>
+          <p class="t-meta mt-1" style="letter-spacing:.3em">SATURDAY · PM 2:30</p>
+        </div>
+
+        <div>
+          <p class="t-venue-kr">브라이튼 하우스 강남</p>
+          <p class="t-meta mt-1">경기도 과천시 죽바위로 37-24</p>
+        </div>
+
+        <div class="flex items-end gap-3 w-full" style="margin-top: 4mm;">
+          <div class="map-placeholder flex-1">
+            <span class="map-pin">●</span>
+            <span class="map-cap">— Map —</span>
+          </div>
+          <div class="flex flex-col items-center gap-1">
+            <div class="qr-placeholder"></div>
+            <span class="t-meta-en" style="font-size:5.5pt;letter-spacing:.18em">SCAN</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════ FACE 2 : 펼친 바깥면 ══════════════════ -->
+  <div>
+    <p class="paper-label">Face 2 · Outside</p>
+    <p class="paper-sub">접었을 때 외부 — 상단 칸 ⟲ 180° 회전</p>
+
+    <div class="paper">
+
+      <div class="fold-line top"><span class="fold-label">Fold</span></div>
+      <div class="fold-line bot"><span class="fold-label">Fold</span></div>
+
+      <!-- ④ 표지 (반전!) -->
+      <section class="panel panel-cover cover-flip">
+        <div>
+          <p class="t-eyebrow-cap">We Invite You</p>
+          <div class="hair-short mt-3"></div>
+        </div>
+
+        <div>
+          <p class="t-title-en" style="font-size:30pt; letter-spacing:.06em">The Wedding</p>
+          <p class="t-title-en mt-1" style="font-size:30pt; letter-spacing:.06em">Day</p>
+        </div>
+
+        <!-- 리본·실링왁스 자리 (가이드) -->
+        <div class="wax-area">— Wax Seal —</div>
+
+        <div>
+          <p class="t-names-en">YONG HWAN &nbsp;&amp;&nbsp; HAN SOL</p>
+          <p class="t-meta-en mt-2" style="letter-spacing:.32em">2026 · 09 · 12</p>
+        </div>
+      </section>
+
+      <!-- ⑤ 뒷면 -->
+      <section class="panel panel-back">
+        <p class="t-eyebrow" style="font-size:9pt; letter-spacing:.32em">Thank you</p>
+      </section>
+
+      <!-- ⑥ 서브 커버 -->
+      <section class="panel panel-sub">
+        <div>
+          <p class="t-eyebrow-cap mb-3">Save the Date</p>
+          <div style="display:flex; align-items:center; justify-content:center; gap:8mm;">
+            <span class="t-meta-en" style="font-size:10pt">SEP</span>
+            <span style="font-family:var(--display-en); font-size:46pt; letter-spacing:.02em; color:var(--ink); line-height:1">12</span>
+            <span class="t-meta-en" style="font-size:10pt">2026</span>
+          </div>
+          <div class="hair-short mt-4"></div>
+          <p class="t-meta mt-3" style="letter-spacing:.25em">SATURDAY &nbsp;·&nbsp; PM 2:30</p>
+          <p class="t-meta mt-1">브라이튼 하우스 강남</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ Canva 이관 가이드 스펙 패널 ════════════ -->
+<aside class="spec-panel" id="specPanel">
+  <button class="spec-close" onclick="document.getElementById('specPanel').classList.remove('open')">✕</button>
+  <h2>Canva Spec</h2>
+  <p style="color:#8B7F73; font-size:10pt; letter-spacing:.1em">캔바 이관용 가이드 — 모든 단위는 mm / pt 기준</p>
+
+  <h3>Paper</h3>
+  <div class="spec-row"><span class="k">전체 펼침 규격</span><span class="v">120 × 360 mm</span></div>
+  <div class="spec-row"><span class="k">한 칸 (3등분)</span><span class="v">120 × 120 mm</span></div>
+  <div class="spec-row"><span class="k">배경색</span><span class="v">#FAF7F2 웜화이트</span></div>
+  <div class="spec-row"><span class="k">재단 여백 (Safe)</span><span class="v">각 칸 내측 12 mm</span></div>
+  <div class="spec-row"><span class="k">오시선 (접지선)</span><span class="v">120mm / 240mm 위치 · 점선</span></div>
+
+  <h3>Typography</h3>
+  <div class="spec-row"><span class="k">영문 디스플레이</span><span class="v">Italiana</span></div>
+  <div class="spec-row"><span class="k">영문 세리프</span><span class="v">Cormorant Garamond</span></div>
+  <div class="spec-row"><span class="k">국문 명조</span><span class="v">Noto Serif KR / 나눔명조</span></div>
+
+  <h3>Font Size — 표지 (Cover)</h3>
+  <div class="spec-row"><span class="k">"We Invite You"</span><span class="v">8 pt · 자간 .42em</span></div>
+  <div class="spec-row"><span class="k">"The Wedding Day"</span><span class="v">30 pt · 자간 .06em</span></div>
+  <div class="spec-row"><span class="k">신랑·신부 영문</span><span class="v">13 pt · 자간 .35em</span></div>
+  <div class="spec-row"><span class="k">날짜 (Sep · 12 · 2026)</span><span class="v">7.5 pt / 46 pt / 7.5 pt</span></div>
+  <div class="spec-row"><span class="k">왁스씰 영역</span><span class="v">⌀ 28 mm 중심 비움</span></div>
+
+  <h3>Font Size — 인사말 (Inside Top)</h3>
+  <div class="spec-row"><span class="k">"Invitation" 라벨</span><span class="v">10 pt · italic · 자간 .18em</span></div>
+  <div class="spec-row"><span class="k">본문 인사말</span><span class="v">9 pt · 행간 2.05 · 자간 .02em</span></div>
+  <div class="spec-row"><span class="k">혼주 · 신랑신부 줄</span><span class="v">8.5 pt · 자간 .05em</span></div>
+  <div class="spec-row"><span class="k">신랑·신부 이름</span><span class="v">8.5 pt · Bold · 자간 .12em</span></div>
+
+  <h3>Font Size — 정보 (Inside Bottom)</h3>
+  <div class="spec-row"><span class="k">"Wedding Day" 라벨</span><span class="v">8 pt · 자간 .42em</span></div>
+  <div class="spec-row"><span class="k">날짜 (2026.09.12)</span><span class="v">14 pt · 자간 .25em</span></div>
+  <div class="spec-row"><span class="k">요일 · 시간</span><span class="v">7.5 pt · 자간 .3em</span></div>
+  <div class="spec-row"><span class="k">홀명</span><span class="v">9.5 pt · Semi-bold · 자간 .12em</span></div>
+  <div class="spec-row"><span class="k">주소</span><span class="v">7.5 pt · Light · 자간 .06em</span></div>
+  <div class="spec-row"><span class="k">약도 박스</span><span class="v">높이 22 mm · 보더 0.4mm</span></div>
+  <div class="spec-row"><span class="k">QR 코드</span><span class="v">14 × 14 mm</span></div>
+
+  <h3>Font Size — 서브 커버 (Outside Bottom)</h3>
+  <div class="spec-row"><span class="k">"Save the Date"</span><span class="v">8 pt · 자간 .42em</span></div>
+  <div class="spec-row"><span class="k">SEP / 2026</span><span class="v">10 pt · 자간 .22em</span></div>
+  <div class="spec-row"><span class="k">12 (메인 숫자)</span><span class="v">46 pt · Italiana</span></div>
+
+  <h3>Color Palette</h3>
+  <div class="spec-row"><span class="k">Paper (배경)</span><span class="v"><code>#FAF7F2</code></span></div>
+  <div class="spec-row"><span class="k">Ink (진잉크)</span><span class="v"><code>#1F1B17</code></span></div>
+  <div class="spec-row"><span class="k">Ink Soft (본문)</span><span class="v"><code>#4A433C</code></span></div>
+  <div class="spec-row"><span class="k">Ink Mute (캡션)</span><span class="v"><code>#8B7F73</code></span></div>
+  <div class="spec-row"><span class="k">Hairline</span><span class="v"><code>#C9BFB1</code></span></div>
+  <div class="spec-row"><span class="k">Gold Accent</span><span class="v"><code>#B89968</code></span></div>
+
+  <h3>Print Notes</h3>
+  <div style="font-size:10pt; line-height:1.85; color:#4A433C; padding:6px 0;">
+    · 매트 코팅지 300g↑ 권장 (광택 無)<br/>
+    · 표지 칸은 인쇄 원고에서 <b>반드시 180° 회전</b> 상태로 제작 (접어 내릴 때 정방향)<br/>
+    · 재단선 외 3mm 도련 추가 권장<br/>
+    · 왁스씰·리본은 인쇄 후 후가공
+  </div>
+</aside>
+
+<footer style="text-align:center; padding:20px 0 60px; color:#8B7F73; font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.15em; font-size:11pt;">
+  Bang &amp; Kim · Yong Hwan &amp; Han Sol · 2026.09.12
+</footer>
+
+</body>
+</html>

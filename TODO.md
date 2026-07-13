@@ -18,7 +18,35 @@
 
 ---
 
-## 🔜 남은 작업
+## ✅ 완료 (2026-07-13)
+
+- [x] 메인 사진 → 긴 타원형 + 1px 흰 테두리
+- [x] 히어로 이름 글씨 축소, 장소 → BRIGHTEN HOUSE GANGNAM (영문 대문자)
+- [x] 인사말 밝고 긍정적인 톤으로 교체
+- [x] 문자하기 버튼 제거
+- [x] 연락처 → 누르면 전화 연결 (신랑/신부 tel: 링크, 혼주는 번호 수령 후 주석 해제)
+- [x] 갤러리 15장으로 확장 (사진은 수요일 수령 예정)
+- [x] 캘린더 12일 하트(♥) 강조
+- [x] 방명록·RSVP → Supabase 실시간 저장 (localradar 프로젝트 `glqwlqnxzxbedybsrexu`, 서울 리전)
+  - `wedding_guestbook`: 공개 읽기/쓰기 + 실시간 반영
+  - `wedding_rsvp`: 쓰기만 공개, 조회는 Supabase 대시보드에서
+- [x] 카카오톡 공유 SDK 코드 완성 (JS 키만 붙여넣으면 동작)
+- [x] OG 이미지 절대경로 수정 (카톡 미리보기용)
+
+---
+
+## 🔜 남은 작업 (자료 수령 대기)
+
+- [ ] **갤러리 사진 15장** — 수요일 수령 예정 → `photos/gallery_1.jpg` ~ `gallery_15.jpg`
+- [ ] **오시는 길 약도** — 브라이튼하우스 단톡방에서 수령 예정 → `photos/map.jpg`
+- [ ] **계좌번호** — 수령 예정 → `.gift-row` 교체
+- [ ] **혼주 전화번호** — 수령 후 index.html 연락처 주석 해제
+- [ ] **카카오 JS 키** — developers.kakao.com에서 발급 → `KAKAO_JS_KEY` 에 붙여넣기 + 플랫폼 Web에 `https://socialbiz1.github.io` 등록
+- [ ] **배포** — 변경사항 git push (GitHub Pages 반영)
+
+---
+
+## 🔜 이전 남은 작업
 
 ### 1) 폰트 교체
 - 현재: `Noto Sans KR` + `Nanum Myeongjo`
