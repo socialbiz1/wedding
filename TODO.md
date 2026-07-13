@@ -46,7 +46,7 @@
 
 ## 🔜 남은 작업 (자료 수령 대기)
 
-- [ ] **갤러리 사진 15장** — 수요일 수령 예정 → `photos/gallery_1.jpg` ~ `gallery_15.jpg`
+- [x] **갤러리 사진** — 40장 반영 완료 (웹 최적화 244MB→5.5MB, 원본은 `photos_originals/`에 로컬 백업, 2026-07-13)
 - [x] **계좌번호** — 신랑(국민)·신부(농협) 반영 완료 (2026-07-13)
 - [ ] **혼주 전화번호** — 수령 후 index.html 연락처 주석 해제
 - [ ] **카카오 JS 키** — developers.kakao.com에서 발급 → `KAKAO_JS_KEY` 에 붙여넣기 + 플랫폼 Web에 `https://socialbiz1.github.io` 등록
