@@ -35,14 +35,21 @@
 
 ---
 
+## ⚠️ 절대 규칙
+
+- **배포 URL(`socialbiz1.github.io/wedding/`)은 변경 금지** — 실물 청첩장에 이 주소 QR이 인쇄되어 있음 (2026-07-13 kazetoto1로 변경했다가 원복한 이력 있음)
+
+## ✅ 추가 완료 (2026-07-13)
+
+- [x] **오시는 길 약도** — 원본에서 지도 부분 크롭 → `photos/map.jpg` 반영
+- [x] **배포** — git push 완료, 라이브 확인 (사진·약도·QR 리소스 200 OK)
+
 ## 🔜 남은 작업 (자료 수령 대기)
 
 - [ ] **갤러리 사진 15장** — 수요일 수령 예정 → `photos/gallery_1.jpg` ~ `gallery_15.jpg`
-- [ ] **오시는 길 약도** — 브라이튼하우스 단톡방에서 수령 예정 → `photos/map.jpg`
 - [ ] **계좌번호** — 수령 예정 → `.gift-row` 교체
 - [ ] **혼주 전화번호** — 수령 후 index.html 연락처 주석 해제
 - [ ] **카카오 JS 키** — developers.kakao.com에서 발급 → `KAKAO_JS_KEY` 에 붙여넣기 + 플랫폼 Web에 `https://socialbiz1.github.io` 등록
-- [ ] **배포** — 변경사항 git push (GitHub Pages 반영)
 
 ---
 
