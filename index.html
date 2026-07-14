@@ -987,7 +987,48 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1002;
     }
+
+    /* 라이트박스 좌우 이동 (갤러리 모드에서만 표시) */
+    .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,.12);
+      border: none;
+      color: white;
+      font-size: 2.2rem;
+      width: 44px;
+      height: 72px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0 0 6px;
+      z-index: 1001;
+    }
+
+    .lightbox.gallery-mode .lb-nav { display: flex; }
+    .lb-nav.prev { left: 8px; }
+    .lb-nav.next { right: 8px; }
+    .lb-nav:active { background: rgba(255,255,255,.3); }
+
+    .lb-counter {
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.85);
+      font-size: .85rem;
+      letter-spacing: .12em;
+      display: none;
+      font-family: var(--serif);
+    }
+
+    .lightbox.gallery-mode .lb-counter { display: block; }
 
     /* ────────── 토스트 ────────── */
     .toast {
@@ -1439,7 +1480,10 @@
 <!-- ── 라이트박스 ── -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
-  <img id="lightbox-img" src="" alt="" />
+  <button class="lb-nav prev" onclick="event.stopPropagation(); stepLightbox(-1)" aria-label="이전 사진">‹</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+  <button class="lb-nav next" onclick="event.stopPropagation(); stepLightbox(1)" aria-label="다음 사진">›</button>
+  <span class="lb-counter" id="lbCounter"></span>
 </div>
 
 <!-- ── 토스트 알림 ── -->
@@ -1462,7 +1506,7 @@
       html += `
         <img src="photos/gallery_${i}.jpg" alt="gallery ${i}" loading="lazy" decoding="async"
              onerror="this.outerHTML='<div class=\\'slot\\'><span>📷</span>${i}</div>'"
-             onclick="openLightbox(this.src)" />
+             onclick="openGalleryLightbox(${i - 1})" />
       `;
     }
     grid.innerHTML = html;
@@ -1478,17 +1522,61 @@
       : `사진 접기 ▲`;
   }
 
-  /* ──────── 라이트박스 ──────── */
-  function openLightbox(src) {
+  /* ──────── 라이트박스 (갤러리는 좌우 슬라이드) ──────── */
+  let lbIndex = -1; // 갤러리 모드 현재 인덱스(0-based), 약도 등 단일 이미지는 -1
+
+  function openLightbox(src) { // 단일 이미지용 (약도)
+    lbIndex = -1;
+    document.getElementById('lightbox').classList.remove('gallery-mode');
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('active');
   }
+
+  function openGalleryLightbox(i) { // 갤러리: 화살표·스와이프로 이동
+    lbIndex = i;
+    document.getElementById('lightbox').classList.add('gallery-mode');
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+  }
+
+  function updateLightbox() {
+    document.getElementById('lightbox-img').src = `photos/gallery_${lbIndex + 1}.jpg`;
+    document.getElementById('lbCounter').textContent = `${lbIndex + 1} / ${GALLERY_COUNT}`;
+  }
+
+  function stepLightbox(d) {
+    if (lbIndex < 0) return;
+    lbIndex = (lbIndex + d + GALLERY_COUNT) % GALLERY_COUNT; // 끝에서 반대편으로 순환
+    updateLightbox();
+  }
+
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
   }
+
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
+    if (!document.getElementById('lightbox').classList.contains('active')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  stepLightbox(-1);
+    if (e.key === 'ArrowRight') stepLightbox(1);
   });
+
+  // 모바일 스와이프로 이전/다음 사진
+  (function () {
+    const lb = document.getElementById('lightbox');
+    let x0 = null, y0 = null;
+    lb.addEventListener('touchstart', e => {
+      x0 = e.touches[0].clientX;
+      y0 = e.touches[0].clientY;
+    }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      const dy = e.changedTouches[0].clientY - y0;
+      x0 = y0 = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) stepLightbox(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  })();
 
   /* ──────── D-Day ──────── */
   function updateCountdown() {
