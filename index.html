@@ -14,7 +14,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&family=Great+Vibes&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -92,14 +92,11 @@
 
     /* ────────── ① HERO ────────── */
     .hero {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       text-align: center;
       background: linear-gradient(160deg, #fff5ee 0%, #fde8dd 50%, #f5d9cb 100%);
-      padding: 80px 24px 60px;
+      padding: 0 0 44px;
       position: relative;
       overflow: hidden;
     }
@@ -126,40 +123,24 @@
       100% { transform: translateY(110vh) rotate(360deg); opacity: 0;   }
     }
 
-    .hero-date-badge {
-      font-family: var(--serif);
-      font-size: .85rem;
-      letter-spacing: .3em;
-      color: var(--rose);
-      text-transform: uppercase;
-      margin-bottom: 28px;
+    /* 풀컷 메인 사진 + 사진 위 글자 */
+    .hero-photo-full {
       position: relative;
-      z-index: 1;
+      width: 100%;
     }
 
-    .hero-photo-wrap {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 36px;
-    }
-
-    .hero-photo-wrap img {
-      width: clamp(250px, 76vw, 360px);
-      height: clamp(375px, 114vw, 540px);
+    .hero-photo-full img {
+      width: 100%;
+      height: min(92vh, 760px);
       object-fit: cover;
       object-position: center;
-      border-radius: 999px; /* 위아래만 둥근 캡슐형 */
-      box-shadow: 0 18px 50px rgba(122,79,58,.22);
-      border: 1px solid white;
       display: block;
     }
 
     .hero-photo-placeholder {
-      width: clamp(250px, 76vw, 360px);
-      height: clamp(375px, 114vw, 540px);
-      border-radius: 999px;
+      width: 100%;
+      height: min(92vh, 760px);
       background: linear-gradient(135deg, var(--blush), #e8c9bb);
-      border: 4px dashed var(--rose);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -171,51 +152,75 @@
 
     .hero-photo-placeholder span { font-size: 2.5rem; }
 
-    .hero-names {
-      font-family: var(--serif);
-      font-size: clamp(1.55rem, 6.2vw, 2.05rem);
-      color: var(--deep);
-      line-height: 1.4;
-      font-weight: 700;
-      position: relative;
+    .hero-script {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      right: 0;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.1rem, 9.5vw, 2.9rem);
+      color: white;
+      text-shadow: 0 2px 16px rgba(0,0,0,.4);
+      line-height: 1.15;
       z-index: 1;
     }
 
-    .hero-names .amp {
-      color: var(--rose);
-      margin: 0 .35em;
-      font-weight: 400;
+    .hero-photo-bottom {
+      position: absolute;
+      bottom: 24px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      font-family: var(--serif);
+      letter-spacing: .16em;
+      font-size: .92rem;
+      font-weight: 700;
+      text-shadow: 0 1px 10px rgba(0,0,0,.45);
+      z-index: 1;
+    }
+
+    .hero-date-chip {
+      border: 1px solid rgba(255,255,255,.75);
+      border-radius: 30px;
+      padding: 5px 14px;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      background: rgba(0,0,0,.14);
+    }
+
+    .hero-below {
+      padding: 34px 24px 0;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-when {
       font-family: var(--serif);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--deep);
-      margin-top: 20px;
-      position: relative;
-      z-index: 1;
       letter-spacing: .05em;
     }
 
+    /* 장소명: 날짜와 같은 크기 + 굵게 */
     .hero-where {
       font-family: var(--serif);
-      font-size: .76rem;
-      letter-spacing: .2em;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--deep);
       margin-top: 8px;
-      position: relative;
-      z-index: 1;
     }
 
     .hero-scroll {
-      position: absolute;
-      bottom: 28px;
+      margin-top: 26px;
       font-size: .72rem;
       color: var(--muted);
       letter-spacing: .2em;
       animation: bounce 2s ease-in-out infinite;
-      z-index: 1;
     }
 
     @keyframes bounce {
@@ -386,10 +391,10 @@
 
     .event-date-big {
       font-family: var(--serif);
-      font-size: clamp(2rem, 8vw, 2.6rem);
+      font-size: clamp(1.45rem, 5.5vw, 1.8rem);
       color: var(--deep);
       font-weight: 700;
-      letter-spacing: .04em;
+      letter-spacing: .06em;
       line-height: 1.2;
     }
 
@@ -402,9 +407,9 @@
     }
 
     .event-time {
-      font-size: 1rem;
+      font-size: .95rem;
       color: var(--text);
-      margin-top: 18px;
+      margin-top: 14px;
     }
 
     .event-divider {
@@ -414,17 +419,39 @@
       margin: 28px auto;
     }
 
-    .event-place {
+    /* 식사 안내 (동시예식) */
+    .meal-title {
       font-family: var(--serif);
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--deep);
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 14px;
     }
 
-    .event-hall {
+    .meal-rows p {
       font-size: .9rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .meal-k {
+      display: inline-block;
+      color: var(--gold);
+      font-size: .76rem;
+      letter-spacing: .12em;
+      margin-right: 10px;
+    }
+
+    .meal-text {
+      font-size: .85rem;
       color: var(--muted);
+      line-height: 1.9;
+      margin-top: 12px;
+    }
+
+    .meal-text strong {
+      color: var(--rose);
+      font-weight: 600;
     }
 
     /* 캘린더 그리드 */
@@ -519,15 +546,16 @@
 
     .address {
       text-align: center;
-      font-size: .95rem;
+      font-family: var(--serif);
+      font-size: 1.15rem;
       color: var(--deep);
-      margin-bottom: 4px;
-      font-weight: 600;
+      margin-bottom: 6px;
+      font-weight: 700;
     }
 
     .address-detail {
       text-align: center;
-      font-size: .82rem;
+      font-size: .92rem;
       color: var(--muted);
       margin-bottom: 20px;
     }
@@ -1065,9 +1093,7 @@
     <span class="petal" style="left:75%; animation-duration:14s; animation-delay:1s;">🌺</span>
     <span class="petal" style="left:90%; animation-duration:13s; animation-delay:3s;">🌸</span>
 
-    <p class="hero-date-badge">2026 · 09 · 12 · SAT</p>
-
-    <div class="hero-photo-wrap">
+    <div class="hero-photo-full">
       <img src="photos/couple.jpg" alt="김용환 & 최한솔"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
            style="display:block;" />
@@ -1075,13 +1101,19 @@
         <span>📷</span>
         대표 사진<br/><small>photos/couple.jpg</small>
       </div>
+      <p class="hero-script">We're getting married</p>
+      <div class="hero-photo-bottom">
+        <span>YONGHWAN</span>
+        <span class="hero-date-chip">2026. 09. 12</span>
+        <span>HANSOL</span>
+      </div>
     </div>
 
-    <h1 class="hero-names">김용환<span class="amp">&amp;</span>최한솔</h1>
-    <p class="hero-when">2026년 9월 12일 토요일 오후 2시 30분</p>
-    <p class="hero-where">BRIGHTEN HOUSE GANGNAM</p>
-
-    <p class="hero-scroll">↓ SCROLL</p>
+    <div class="hero-below">
+      <p class="hero-when">2026년 9월 12일 토요일 오후 2시 30분</p>
+      <p class="hero-where">Brighten House Gangnam</p>
+      <p class="hero-scroll">↓ SCROLL</p>
+    </div>
   </section>
 
 
@@ -1098,11 +1130,10 @@
         함께 있으면 하루가 더 환해지는 사람.<br/>
         그렇게 다섯 해를 웃으며 걸어왔습니다.<br/><br/>
         서로의 가장 좋은 친구이자<br/>
-        든든한 편이 되어준 우리,<br/>
+        힘든 시간에도 든든한 편이 되어준 우리,<br/>
         이제 <em>평생을 함께 웃기로</em> 약속합니다.<br/><br/>
         저희 두 사람의 설레는 첫걸음,<br/>
-        오셔서 환하게 웃어주시면<br/>
-        그보다 큰 선물은 없겠습니다.
+        오셔서 축복해 주시면 감사하겠습니다.
       </p>
     </div>
   </section>
@@ -1139,14 +1170,14 @@
           <a href="tel:010-2466-0762" class="contact-btn"><span class="ic">📞</span> 신랑 김용환</a>
           <a href="tel:010-2326-7049" class="contact-btn"><span class="ic">📞</span> 신부 최한솔</a>
         </div>
-        <!-- ★ 혼주 번호 받으면 아래 주석 해제 후 번호 교체
         <div class="contact-row" style="margin-top:10px;">
-          <a href="tel:010-0000-0000" class="contact-btn">신랑 父</a>
-          <a href="tel:010-0000-0000" class="contact-btn">신랑 母</a>
-          <a href="tel:010-0000-0000" class="contact-btn">신부 父</a>
-          <a href="tel:010-0000-0000" class="contact-btn">신부 母</a>
+          <a href="tel:010-3661-0762" class="contact-btn">신랑 아버지</a>
+          <a href="tel:010-8576-1886" class="contact-btn">신랑 어머니</a>
         </div>
-        -->
+        <div class="contact-row" style="margin-top:10px;">
+          <a href="tel:010-2257-7049" class="contact-btn">신부 아버지</a>
+          <a href="tel:010-2284-7049" class="contact-btn">신부 어머니</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1183,8 +1214,21 @@
 
       <div class="event-divider"></div>
 
-      <p class="event-place">브라이튼 하우스 강남</p>
-      <p class="event-hall">경기도 과천시 죽바위로 37-24</p>
+      <!-- 식사 안내 (장소·주소는 오시는 길에서 안내) -->
+      <div class="meal-info">
+        <p class="meal-title">🍽️ 식사 안내</p>
+        <div class="meal-rows">
+          <p><span class="meal-k">예식 형태</span>동시예식</p>
+          <p><span class="meal-k">식사 시간</span>1부 본식 종료 후 바로 시작</p>
+        </div>
+        <p class="meal-text">
+          별도의 식당 이동 없이 예식 홀 내에서 식사가 진행됩니다.<br/>
+          개인 좌석은 그대로 유지해 주시고, 1부 종료 후<br/>
+          홀 뒤편에 마련된 뷔페를 편안하게 이용해 주세요.<br/>
+          <strong>메인 스테이크가 함께 제공됩니다.</strong><br/>
+          맛있는 식사와 함께 2부 예식도 함께해 주시면 감사하겠습니다.
+        </p>
+      </div>
 
       <!-- 캘린더 -->
       <div class="calendar">
@@ -1297,7 +1341,7 @@
   <section class="dday">
     <p class="dday-label">WEDDING COUNTDOWN</p>
     <h2 class="dday-title">D-Day</h2>
-    <p class="dday-sub">2026년 9월 12일 오후 2시 30분 · 브라이튼 하우스 강남</p>
+    <p class="dday-sub">2026년 9월 12일 토요일 오후 2시 30분</p>
     <div class="dday-counter" id="countdown">
       <div class="dday-unit">
         <span class="dday-num" id="cd-days">--</span>
