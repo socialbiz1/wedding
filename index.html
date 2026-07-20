@@ -380,28 +380,10 @@
     /* ────────── ⑤ 예식 안내 ────────── */
     .event { background: white; text-align: center; }
 
-    .event-date-big {
-      font-family: var(--serif);
-      font-size: clamp(1.45rem, 5.5vw, 1.8rem);
-      color: var(--deep);
-      font-weight: 700;
-      letter-spacing: .06em;
-      line-height: 1.2;
-    }
-
-    .event-day {
-      font-family: var(--serif);
-      font-size: .78rem;
-      color: var(--gold);
-      margin-top: 8px;
-      letter-spacing: .3em;
-    }
-
     .event-time {
       font-family: var(--serif);
       font-size: 1.05rem;
       color: var(--deep);
-      margin-top: 14px;
       letter-spacing: .05em;
     }
 
@@ -422,12 +404,14 @@
     }
 
     .meal-lead {
+      font-family: var(--serif);
       font-size: .92rem;
       color: var(--text);
       margin-bottom: 14px;
     }
 
     .meal-text {
+      font-family: var(--serif);
       font-size: .88rem;
       color: var(--muted);
       line-height: 1.95;
@@ -1201,7 +1185,7 @@
       </div>
 
       <button class="gallery-more" id="galleryMoreBtn" onclick="toggleGallery()">
-        사진 더보기 (49장) ▼
+        사진 더보기 (48장) ▼
       </button>
     </div>
   </section>
@@ -1213,8 +1197,6 @@
       <p class="label">WEDDING DAY</p>
       <h2 class="title">예식 안내</h2>
 
-      <p class="event-date-big">2026.09.12</p>
-      <p class="event-day">SATURDAY</p>
       <p class="event-time">오후 2시 30분</p>
 
       <div class="event-divider"></div>
@@ -1575,7 +1557,7 @@
 
 <script>
   /* ──────── 갤러리 자동 생성 ──────── */
-  const GALLERY_COUNT = 49;
+  const GALLERY_COUNT = 48;
   (function buildGallery() {
     const grid = document.getElementById('galleryGrid');
     let html = '';
