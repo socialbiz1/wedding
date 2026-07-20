@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>김용환 ♥ 최한솔 우리 결혼합니다</title>
 
   <!-- ─ 카카오톡 공유 미리보기용 메타 ─ -->
@@ -180,15 +180,6 @@
       font-weight: 700;
       text-shadow: 0 1px 10px rgba(0,0,0,.45);
       z-index: 1;
-    }
-
-    .hero-date-chip {
-      border: 1px solid rgba(255,255,255,.75);
-      border-radius: 30px;
-      padding: 5px 14px;
-      font-size: .78rem;
-      letter-spacing: .12em;
-      background: rgba(0,0,0,.14);
     }
 
     .hero-below {
@@ -1096,7 +1087,8 @@
     <div class="hero-photo-full">
       <img src="photos/couple.jpg" alt="김용환 & 최한솔"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-           style="display:block;" />
+           onclick="openLightbox(this.src)"
+           style="display:block; cursor: zoom-in;" />
       <div class="hero-photo-placeholder" style="display:none;">
         <span>📷</span>
         대표 사진<br/><small>photos/couple.jpg</small>
@@ -1104,7 +1096,6 @@
       <p class="hero-script">We're getting married</p>
       <div class="hero-photo-bottom">
         <span>YONGHWAN</span>
-        <span class="hero-date-chip">2026. 09. 12</span>
         <span>HANSOL</span>
       </div>
     </div>
@@ -1131,7 +1122,7 @@
         그렇게 다섯 해를 웃으며 걸어왔습니다.<br/><br/>
         서로의 가장 좋은 친구이자<br/>
         힘든 시간에도 든든한 편이 되어준 우리,<br/>
-        이제 <em>평생을 함께 웃기로</em> 약속합니다.<br/><br/>
+        이제 평생을 함께 웃기로 약속합니다.<br/><br/>
         저희 두 사람의 설레는 첫걸음,<br/>
         오셔서 축복해 주시면 감사하겠습니다.
       </p>
@@ -1393,6 +1384,21 @@
             </div>
             <button class="gift-copy" onclick="copyAccount(this, '국민은행 353902-01-113791')">복사</button>
           </div>
+          <!-- ★ 아래 두 칸: 계좌번호 받으면 채우고 복사 버튼 추가 -->
+          <div class="gift-row">
+            <div class="gift-info">
+              <p class="gift-relation">신랑 아버지</p>
+              <p class="gift-name">김길수</p>
+              <p class="gift-account">계좌번호 준비 중</p>
+            </div>
+          </div>
+          <div class="gift-row">
+            <div class="gift-info">
+              <p class="gift-relation">신랑 어머니</p>
+              <p class="gift-name">유미숙</p>
+              <p class="gift-account">계좌번호 준비 중</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1410,6 +1416,21 @@
               <p class="gift-account">농협중앙회 35215-0036-4553</p>
             </div>
             <button class="gift-copy" onclick="copyAccount(this, '농협중앙회 35215-0036-4553')">복사</button>
+          </div>
+          <!-- ★ 아래 두 칸: 계좌번호 받으면 채우고 복사 버튼 추가 -->
+          <div class="gift-row">
+            <div class="gift-info">
+              <p class="gift-relation">신부 아버지</p>
+              <p class="gift-name">최경주</p>
+              <p class="gift-account">계좌번호 준비 중</p>
+            </div>
+          </div>
+          <div class="gift-row">
+            <div class="gift-info">
+              <p class="gift-relation">신부 어머니</p>
+              <p class="gift-name">노춘자</p>
+              <p class="gift-account">계좌번호 준비 중</p>
+            </div>
           </div>
         </div>
       </div>
