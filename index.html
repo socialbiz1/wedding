@@ -391,16 +391,18 @@
 
     .event-day {
       font-family: var(--serif);
-      font-size: .95rem;
-      color: var(--rose);
+      font-size: .78rem;
+      color: var(--gold);
       margin-top: 8px;
       letter-spacing: .3em;
     }
 
     .event-time {
-      font-size: .95rem;
-      color: var(--text);
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--deep);
       margin-top: 14px;
+      letter-spacing: .05em;
     }
 
     .event-divider {
@@ -410,39 +412,30 @@
       margin: 28px auto;
     }
 
-    /* 식사 안내 (동시예식) */
+    /* 식사 안내 (동시예식) — 예식안내와 같은 톤으로 통일 */
     .meal-title {
       font-family: var(--serif);
       font-size: 1.05rem;
       color: var(--deep);
       font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .meal-lead {
+      font-size: .92rem;
+      color: var(--text);
       margin-bottom: 14px;
     }
 
-    .meal-rows p {
-      font-size: .9rem;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .meal-k {
-      display: inline-block;
-      color: var(--gold);
-      font-size: .76rem;
-      letter-spacing: .12em;
-      margin-right: 10px;
-    }
-
     .meal-text {
-      font-size: .85rem;
+      font-size: .88rem;
       color: var(--muted);
-      line-height: 1.9;
-      margin-top: 12px;
+      line-height: 1.95;
     }
 
     .meal-text strong {
-      color: var(--rose);
-      font-weight: 600;
+      color: var(--muted);
+      font-weight: 700;
     }
 
     /* 캘린더 그리드 */
@@ -546,9 +539,11 @@
 
     .address-detail {
       text-align: center;
-      font-size: .92rem;
+      font-family: var(--serif);
+      font-size: .95rem;
       color: var(--muted);
       margin-bottom: 20px;
+      letter-spacing: .01em;
     }
 
     .map-buttons {
@@ -915,6 +910,25 @@
       color: var(--muted);
     }
 
+    .gb-item-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gb-del {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: .78rem;
+      padding: 2px 4px;
+      line-height: 1;
+      opacity: .55;
+    }
+
+    .gb-del:active { color: var(--rose); opacity: 1; }
+
     .gb-item-msg {
       font-size: .88rem;
       color: var(--text);
@@ -1208,10 +1222,7 @@
       <!-- 식사 안내 (장소·주소는 오시는 길에서 안내) -->
       <div class="meal-info">
         <p class="meal-title">🍽️ 식사 안내</p>
-        <div class="meal-rows">
-          <p><span class="meal-k">예식 형태</span>동시예식</p>
-          <p><span class="meal-k">식사 시간</span>1부 본식 종료 후 바로 시작</p>
-        </div>
+        <p class="meal-lead">동시예식 · 1부 본식 종료 후 바로 식사가 시작됩니다</p>
         <p class="meal-text">
           별도의 식당 이동 없이 예식 홀 내에서 식사가 진행됩니다.<br/>
           개인 좌석은 그대로 유지해 주시고, 1부 종료 후<br/>
@@ -1502,6 +1513,7 @@
 
       <form class="gb-form" onsubmit="submitGuestbook(event)">
         <input type="text" name="name" placeholder="성함" required maxlength="20" />
+        <input type="password" name="pass" placeholder="비밀번호 (내 메시지 삭제할 때 필요)" required minlength="2" maxlength="8" autocomplete="new-password" />
         <textarea name="msg" placeholder="축하 메시지를 남겨주세요" required maxlength="200"></textarea>
         <button type="submit">메시지 남기기</button>
       </form>
@@ -1744,7 +1756,10 @@
       <div class="gb-item">
         <div class="gb-item-head">
           <span class="gb-item-name">${escapeHTML(item.name)}</span>
-          <span class="gb-item-date">${formatDate(item.created_at)}</span>
+          <span class="gb-item-meta">
+            <span class="gb-item-date">${formatDate(item.created_at)}</span>
+            <button class="gb-del" onclick="deleteGuestbook('${item.id}')" aria-label="메시지 삭제">✕</button>
+          </span>
         </div>
         <div class="gb-item-msg">${escapeHTML(item.msg)}</div>
       </div>
@@ -1765,12 +1780,13 @@
     e.preventDefault();
     const form = e.target;
     const data = Object.fromEntries(new FormData(form));
-    const btn  = form.querySelector('button');
+    const btn  = form.querySelector('button[type="submit"]');
     btn.disabled = true;
 
-    const { error } = await sb.from('wedding_guestbook').insert({
-      name: data.name.trim(),
-      msg:  data.msg.trim(),
+    const { error } = await sb.rpc('gb_add', {
+      p_name: data.name.trim(),
+      p_msg:  data.msg.trim(),
+      p_pass: data.pass,
     });
     btn.disabled = false;
 
@@ -1783,6 +1799,20 @@
     loadGuestbook(); // 실시간 이벤트 유실 대비 즉시 갱신
   }
 
+  async function deleteGuestbook(id) {
+    const pass = prompt('작성하실 때 입력한 비밀번호를 입력해 주세요');
+    if (pass === null || pass === '') return;
+
+    const { data: ok, error } = await sb.rpc('gb_delete', { p_id: id, p_pass: pass });
+    if (error || !ok) {
+      showToast('비밀번호가 일치하지 않습니다');
+      return;
+    }
+    gbItems = gbItems.filter(i => i.id !== id);
+    renderGuestbook();
+    showToast('메시지가 삭제되었습니다');
+  }
+
   // 다른 하객이 남긴 메시지도 새로고침 없이 즉시 표시
   sb.channel('wedding-guestbook')
     .on('postgres_changes',
@@ -1793,7 +1823,16 @@
           renderGuestbook();
         }
       })
+    .on('postgres_changes',
+      { event: 'DELETE', schema: 'public', table: 'wedding_guestbook' },
+      payload => {
+        gbItems = gbItems.filter(i => i.id !== payload.old.id);
+        renderGuestbook();
+      })
     .subscribe();
+
+  // 실시간 채널이 끊겨도 최신 상태 유지 (30초 폴링 백업)
+  setInterval(loadGuestbook, 30000);
 
   function escapeHTML(s) {
     return String(s)
