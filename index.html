@@ -14,7 +14,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -380,48 +380,42 @@
     /* ────────── ⑤ 예식 안내 ────────── */
     .event { background: white; text-align: center; }
 
-    .event-time {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--deep);
-      letter-spacing: .05em;
-    }
-
-    .event-divider {
-      width: 60px;
-      height: 1px;
-      background: var(--gold);
-      margin: 28px auto;
-    }
-
-    /* 식사 안내 (동시예식) — 예식안내와 같은 톤으로 통일 */
-    .meal-title {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--deep);
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    /* 나눔명조엔 중간 굵기가 없어 명조 계열 Noto Serif KR 500 사용 (살짝 굵게) */
+    /* 식사 안내 — 명조 계열 Noto Serif KR (나눔명조엔 중간 굵기가 없음) */
     .meal-lead {
       font-family: 'Noto Serif KR', var(--serif);
-      font-weight: 500;
-      font-size: .92rem;
-      color: var(--text);
-      margin-bottom: 14px;
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--deep);
+      margin-bottom: 22px;
     }
 
-    .meal-text {
+    .meal-rows {
+      text-align: left;
+      max-width: 360px;
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
+    }
+
+    .meal-rows p {
       font-family: 'Noto Serif KR', var(--serif);
       font-weight: 500;
       font-size: .88rem;
       color: var(--muted);
-      line-height: 1.95;
+      line-height: 1.85;
+      padding-left: 16px;
+      position: relative;
     }
 
-    .meal-text strong {
-      color: var(--muted);
+    .meal-rows p::before {
+      content: '•';
+      position: absolute;
+      left: 2px;
+      color: var(--gold);
+    }
+
+    .meal-rows strong {
+      color: var(--deep);
       font-weight: 700;
     }
 
@@ -1200,21 +1194,15 @@
       <p class="label">WEDDING DAY</p>
       <h2 class="title">예식 안내</h2>
 
-      <p class="event-time">오후 2시 30분</p>
-
-      <div class="event-divider"></div>
-
       <!-- 식사 안내 (장소·주소는 오시는 길에서 안내) -->
-      <div class="meal-info">
-        <p class="meal-title">🍽️ 식사 안내</p>
-        <p class="meal-lead">동시예식 · 1부 본식 종료 후 바로 식사가 시작됩니다</p>
-        <p class="meal-text">
-          별도의 식당 이동 없이 예식 홀 내에서 식사가 진행됩니다.<br/>
-          개인 좌석은 그대로 유지해 주시고, 1부 종료 후<br/>
-          홀 뒤편에 마련된 뷔페를 편안하게 이용해 주세요.<br/>
-          <strong>메인 스테이크가 함께 제공됩니다.</strong><br/>
-          맛있는 식사와 함께 2부 예식도 함께해 주시면 감사하겠습니다.
-        </p>
+      <p class="meal-lead">동시예식 · 1부 본식 종료 후 바로 식사가 시작됩니다</p>
+
+      <div class="meal-rows">
+        <p><strong>예식 형태 :</strong> 동시 예식 (좌석 식사)</p>
+        <p><strong>식사 시간 :</strong> 1부 본식 종료 후 바로 시작됩니다.</p>
+        <p><strong>안내 사항 :</strong> 별도의 이동 없이 좌석에서 식사하실 수 있으며,
+          홀 뒤편 뷔페와 메인 스테이크가 함께 제공됩니다.
+          맛있는 식사와 함께 2부 예식도 즐겨주세요.</p>
       </div>
 
       <!-- 캘린더 -->
