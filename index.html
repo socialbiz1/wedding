@@ -14,7 +14,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -403,15 +403,18 @@
       margin-bottom: 12px;
     }
 
+    /* 나눔명조엔 중간 굵기가 없어 명조 계열 Noto Serif KR 500 사용 (살짝 굵게) */
     .meal-lead {
-      font-family: var(--serif);
+      font-family: 'Noto Serif KR', var(--serif);
+      font-weight: 500;
       font-size: .92rem;
       color: var(--text);
       margin-bottom: 14px;
     }
 
     .meal-text {
-      font-family: var(--serif);
+      font-family: 'Noto Serif KR', var(--serif);
+      font-weight: 500;
       font-size: .88rem;
       color: var(--muted);
       line-height: 1.95;
