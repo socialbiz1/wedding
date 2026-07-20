@@ -1621,19 +1621,42 @@
   });
 
   // 모바일 스와이프로 이전/다음 사진
+  // 단, 핀치 줌(두 손가락)이나 확대 상태에서는 절대 넘어가지 않음
   (function () {
     const lb = document.getElementById('lightbox');
-    let x0 = null, y0 = null;
+    let x0 = null, y0 = null, pinching = false;
+
     lb.addEventListener('touchstart', e => {
+      if (e.touches.length > 1) {  // 두 손가락 = 핀치 줌
+        pinching = true;
+        x0 = y0 = null;
+        return;
+      }
       x0 = e.touches[0].clientX;
       y0 = e.touches[0].clientY;
     }, { passive: true });
+
+    lb.addEventListener('touchmove', e => {
+      if (e.touches.length > 1) {
+        pinching = true;
+        x0 = y0 = null;
+      }
+    }, { passive: true });
+
     lb.addEventListener('touchend', e => {
+      // 핀치 제스처가 완전히 끝날 때까지 스와이프 무시
+      if (pinching) {
+        if (e.touches.length === 0) pinching = false;
+        return;
+      }
       if (x0 === null) return;
       const dx = e.changedTouches[0].clientX - x0;
       const dy = e.changedTouches[0].clientY - y0;
       x0 = y0 = null;
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) stepLightbox(dx < 0 ? 1 : -1);
+      // 화면이 확대된 상태면 손가락 이동은 '사진 둘러보기'이므로 넘기지 않음
+      if (window.visualViewport && window.visualViewport.scale > 1.05) return;
+      // 확실한 가로 스와이프일 때만 이동 (60px 이상 + 가로가 세로의 1.5배 이상)
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) stepLightbox(dx < 0 ? 1 : -1);
     }, { passive: true });
   })();
 
