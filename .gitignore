@@ -1,2 +1,4 @@
 # 사진 원본 백업 (245MB — 저장소에 올리지 않음)
 photos_originals/
+# 여자친구 크롭 원본 (이미 photos/에 최적화 반영됨)
+new_crops/
