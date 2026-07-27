@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>RSVP 확인 · 김용환 ♥ 최한솔</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #fdf8f3; --blush: #f2e0d5; --rose: #c9876b; --deep: #7a4f3a;
+      --gold: #c8a97e; --text: #3d2b1f; --muted: #8a7060; --line: #ead9cb;
+      --serif: 'Nanum Myeongjo', serif; --sans: 'Noto Sans KR', sans-serif;
+    }
+    body { font-family: var(--sans); background: #ece4dc; color: var(--text); line-height: 1.6; word-break: keep-all; }
+    .wrap { max-width: 640px; margin: 0 auto; background: var(--cream); min-height: 100vh; box-shadow: 0 0 40px rgba(0,0,0,.08); }
+    header { text-align: center; padding: 40px 20px 24px; border-bottom: 1px solid var(--line); }
+    header .label { font-family: var(--serif); font-size: .72rem; letter-spacing: .35em; color: var(--gold); text-transform: uppercase; }
+    header h1 { font-family: var(--serif); font-size: 1.35rem; color: var(--deep); margin-top: 10px; font-weight: 700; }
+    header p { font-size: .82rem; color: var(--muted); margin-top: 6px; }
+
+    /* 로그인 */
+    .login { padding: 48px 24px; text-align: center; }
+    .login p { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+    .login input { width: 100%; max-width: 280px; padding: 13px 16px; border: 1px solid var(--line); border-radius: 10px; font-size: 1rem; background: white; color: var(--text); text-align: center; }
+    .login input:focus { outline: 2px solid var(--rose); outline-offset: -1px; }
+    .login button { display: block; width: 100%; max-width: 280px; margin: 12px auto 0; padding: 13px; background: var(--rose); color: white; border: none; border-radius: 30px; font-size: .95rem; font-family: var(--serif); font-weight: 700; letter-spacing: .1em; cursor: pointer; }
+    .login button:active { background: var(--deep); }
+    .login .err { color: #c0392b; font-size: .85rem; margin-top: 14px; min-height: 1.2em; }
+
+    .dash { display: none; padding: 24px 18px 60px; }
+    .dash.active { display: block; }
+
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+    .card { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; }
+    .card.big { grid-column: span 2; background: linear-gradient(135deg, #fff5ee, #fde8dd); }
+    .card .k { font-size: .74rem; color: var(--muted); letter-spacing: .05em; }
+    .card .v { font-family: var(--serif); font-size: 1.8rem; color: var(--deep); font-weight: 700; margin-top: 4px; }
+    .card .v small { font-size: .9rem; color: var(--muted); font-weight: 400; }
+    .card .sub { font-size: .72rem; color: var(--rose); margin-top: 4px; }
+
+    .bar { display: flex; align-items: center; justify-content: space-between; margin: 22px 4px 10px; }
+    .bar h2 { font-family: var(--serif); font-size: 1rem; color: var(--deep); }
+    .bar .actions { display: flex; gap: 8px; }
+    .bar button { padding: 7px 12px; font-size: .78rem; border: 1px solid var(--line); background: white; border-radius: 20px; color: var(--deep); cursor: pointer; font-family: var(--sans); }
+    .bar button:active { background: var(--blush); }
+    .updated { text-align: right; font-size: .7rem; color: var(--muted); margin: 0 4px 10px; }
+
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; font-size: .85rem; }
+    th, td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--line); }
+    th { background: var(--blush); color: var(--deep); font-weight: 600; font-size: .76rem; letter-spacing: .03em; }
+    td.name { font-weight: 600; color: var(--deep); }
+    tr:last-child td { border-bottom: none; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: .72rem; }
+    .tag.y { background: #e6f0e6; color: #3a7a3a; }
+    .tag.n { background: #f3e0e0; color: #a04040; }
+    .tag.groom { background: #e0e8f3; color: #40608a; }
+    .tag.bride { background: #f7ece2; color: var(--rose); }
+    .empty { text-align: center; color: var(--muted); padding: 40px 20px; font-size: .9rem; }
+    .side-split { display: flex; gap: 10px; margin-top: 12px; }
+    .side-split .card { flex: 1; }
+    .logout { display: block; margin: 30px auto 0; padding: 8px 20px; background: none; border: 1px solid var(--line); border-radius: 20px; color: var(--muted); font-size: .78rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="label">RSVP DASHBOARD</p>
+    <h1>참석 현황</h1>
+    <p>김용환 ♥ 최한솔 · 2026.09.12</p>
+  </header>
+
+  <!-- 로그인 -->
+  <section class="login" id="login">
+    <p>🔒 관리자 비밀번호를 입력해 주세요</p>
+    <input type="password" id="pass" placeholder="비밀번호" autocomplete="current-password" />
+    <button onclick="login()">확 인</button>
+    <p class="err" id="err"></p>
+  </section>
+
+  <!-- 대시보드 -->
+  <section class="dash" id="dash">
+    <div class="cards">
+      <div class="card big">
+        <div class="k">참석 인원 (총원)</div>
+        <div class="v"><span id="attendPeople">0</span><small>명</small></div>
+        <div class="sub" id="respLine">응답 0건</div>
+      </div>
+      <div class="card">
+        <div class="k">참석 응답</div>
+        <div class="v" id="attendResp">0<small>건</small></div>
+      </div>
+      <div class="card">
+        <div class="k">불참 응답</div>
+        <div class="v" id="absentResp">0<small>건</small></div>
+      </div>
+    </div>
+    <div class="side-split">
+      <div class="card"><div class="k">신랑측 참석</div><div class="v" id="groomPeople">0<small>명</small></div></div>
+      <div class="card"><div class="k">신부측 참석</div><div class="v" id="bridePeople">0<small>명</small></div></div>
+      <div class="card"><div class="k">식사 인원</div><div class="v" id="mealPeople">0<small>명</small></div></div>
+    </div>
+
+    <div class="bar">
+      <h2>응답 목록</h2>
+      <div class="actions">
+        <button onclick="load()">↻ 새로고침</button>
+        <button onclick="exportCsv()">CSV 저장</button>
+      </div>
+    </div>
+    <p class="updated" id="updated"></p>
+    <div id="tableWrap"></div>
+
+    <button class="logout" onclick="logout()">로그아웃</button>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://glqwlqnxzxbedybsrexu.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_-pqI_n_LglTGBUnEjhVeIQ_Kl2Zhx-U';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const LS_KEY = 'wedding_rsvp_pass';
+
+  let currentPass = null;
+  let currentRows = [];
+  let timer = null;
+
+  async function fetchDashboard(pass) {
+    const { data, error } = await sb.rpc('rsvp_dashboard', { p_pass: pass });
+    if (error) throw error;
+    return data;
+  }
+
+  async function login() {
+    const pass = document.getElementById('pass').value;
+    const err = document.getElementById('err');
+    err.textContent = '';
+    if (!pass) { err.textContent = '비밀번호를 입력해 주세요.'; return; }
+    try {
+      const data = await fetchDashboard(pass);
+      currentPass = pass;
+      localStorage.setItem(LS_KEY, pass);
+      showDashboard(data);
+    } catch (e) {
+      err.textContent = '비밀번호가 일치하지 않습니다.';
+    }
+  }
+
+  function showDashboard(data) {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('dash').classList.add('active');
+    render(data);
+    if (timer) clearInterval(timer);
+    timer = setInterval(load, 30000); // 30초마다 자동 갱신
+  }
+
+  async function load() {
+    if (!currentPass) return;
+    try {
+      const data = await fetchDashboard(currentPass);
+      render(data);
+    } catch (e) { /* 조용히 무시 */ }
+  }
+
+  function render(data) {
+    const s = data.summary;
+    currentRows = data.rows || [];
+    document.getElementById('attendPeople').textContent = s.attend_people;
+    document.getElementById('respLine').textContent = `응답 ${s.total}건 · 참석 ${s.attend_resp} / 불참 ${s.absent_resp}`;
+    document.getElementById('attendResp').innerHTML = `${s.attend_resp}<small>건</small>`;
+    document.getElementById('absentResp').innerHTML = `${s.absent_resp}<small>건</small>`;
+    document.getElementById('groomPeople').innerHTML = `${s.groom_people}<small>명</small>`;
+    document.getElementById('bridePeople').innerHTML = `${s.bride_people}<small>명</small>`;
+    document.getElementById('mealPeople').innerHTML = `${s.meal_people}<small>명</small>`;
+
+    const wrap = document.getElementById('tableWrap');
+    if (currentRows.length === 0) {
+      wrap.innerHTML = '<div class="empty">아직 응답이 없습니다.</div>';
+    } else {
+      let html = '<table><thead><tr><th>성함</th><th>참석</th><th>구분</th><th>인원</th><th>식사</th><th>시각</th></tr></thead><tbody>';
+      for (const r of currentRows) {
+        const at = r.attend === '참석'
+          ? '<span class="tag y">참석</span>'
+          : '<span class="tag n">불참</span>';
+        const side = r.side === '신랑측'
+          ? '<span class="tag groom">신랑측</span>'
+          : '<span class="tag bride">신부측</span>';
+        html += `<tr><td class="name">${esc(r.name)}</td><td>${at}</td><td>${side}</td><td>${r.count}</td><td>${esc(r.meal)}</td><td>${fmt(r.created_at)}</td></tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    }
+    const now = new Date();
+    document.getElementById('updated').textContent =
+      `업데이트 ${now.getMonth()+1}.${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} · 30초마다 자동 갱신`;
+  }
+
+  function exportCsv() {
+    if (!currentRows.length) return;
+    const head = ['성함','참석여부','구분','인원','식사','제출시각'];
+    const lines = [head.join(',')];
+    for (const r of currentRows) {
+      lines.push([r.name, r.attend, r.side, r.count, r.meal, fmt(r.created_at)].map(csvCell).join(','));
+    }
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'rsvp_' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function logout() {
+    localStorage.removeItem(LS_KEY);
+    currentPass = null;
+    if (timer) clearInterval(timer);
+    document.getElementById('dash').classList.remove('active');
+    document.getElementById('login').style.display = 'block';
+    document.getElementById('pass').value = '';
+    document.getElementById('err').textContent = '';
+  }
+
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function csvCell(v) { const s = String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; }
+  function fmt(iso) {
+    const d = new Date(iso);
+    return `${d.getMonth()+1}.${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+
+  // 저장된 비밀번호로 자동 로그인
+  document.getElementById('pass').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+  (async function autoLogin() {
+    const saved = localStorage.getItem(LS_KEY);
+    if (!saved) return;
+    try {
+      const data = await fetchDashboard(saved);
+      currentPass = saved;
+      showDashboard(data);
+    } catch (e) {
+      localStorage.removeItem(LS_KEY);
+    }
+  })();
+</script>
+</body>
+</html>
