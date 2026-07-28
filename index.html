@@ -974,6 +974,14 @@
     .share-btn:active { background: var(--blush); }
     .share-btn.kakao { background: #fee500; border-color: #fee500; color: #391b1b; }
 
+    .share-hint {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
     /* ────────── FOOTER ────────── */
     footer {
       text-align: center;
@@ -1532,13 +1540,14 @@
       <h2 class="title">청첩장 공유하기</h2>
 
       <div class="share-buttons">
-        <button class="share-btn kakao" onclick="shareKakao()">
-          💬 카카오톡
+        <button class="share-btn kakao" onclick="shareInvite()">
+          💌 청첩장 공유하기
         </button>
         <button class="share-btn" onclick="copyLink()">
           🔗 링크 복사
         </button>
       </div>
+      <p class="share-hint">공유하기를 누른 뒤 카카오톡을 선택하면,<br/>받는 분이 눌러서 바로 열 수 있어요.</p>
     </div>
   </section>
 
@@ -1566,9 +1575,6 @@
 <!-- ── 토스트 알림 ── -->
 <div class="toast" id="toast"></div>
 
-
-<!-- 카카오톡 공유 SDK -->
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 
 <!-- Supabase (방명록·RSVP 실시간 저장) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1872,38 +1878,49 @@
   loadGuestbook();
 
   /* ──────── 공유하기 ──────── */
-  // ★ 카카오 개발자 콘솔(developers.kakao.com) > 내 애플리케이션 > 앱 키 > "JavaScript 키" 를 아래에 붙여넣기
-  //   플랫폼 > Web 에 https://socialbiz1.github.io 도메인 등록 필요
-  const KAKAO_JS_KEY = 'ed23742e1f37ac08bc7caddaacd6fa40';
   const SITE_URL = 'https://socialbiz1.github.io/wedding/';
 
-  function shareKakao() {
-    if (!KAKAO_JS_KEY) {
-      showToast('카카오 SDK 키 등록 후 사용 가능합니다');
-      return;
+  // 휴대폰 기본 공유 시트로 링크 전송.
+  // 카카오톡을 선택하면 카톡이 직접 링크 미리보기를 만들어 → 받는 사람이 눌러서 바로 열림.
+  // (카카오 개발자 앱의 카드 링크 제약을 완전히 우회)
+  async function shareInvite() {
+    const data = {
+      title: '김용환 ♥ 최한솔 결혼합니다',
+      text: '김용환 ♥ 최한솔 결혼합니다\n2026년 9월 12일 토요일 오후 2시 30분\n브라이튼 하우스 강남',
+      url: SITE_URL,
+    };
+    if (navigator.share) {
+      try { await navigator.share(data); }
+      catch (e) { /* 사용자가 공유창을 닫은 경우 등은 무시 */ }
+    } else {
+      // 데스크탑 등 공유 시트 미지원 → 링크 복사로 대체
+      copyLink();
+      showToast('이 브라우저는 공유가 안 돼요. 링크를 복사했으니 붙여넣어 주세요.');
     }
-    if (!window.Kakao) {
-      showToast('카카오 SDK 로드에 실패했습니다');
-      return;
-    }
-    if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
-    const link = { mobileWebUrl: SITE_URL, webUrl: SITE_URL };
-    Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '김용환 ♥ 최한솔 결혼합니다',
-        description: '2026년 9월 12일 토요일 오후 2시 30분\n브라이튼 하우스 강남',
-        imageUrl: SITE_URL + 'photos/couple.jpg',
-        link,
-      },
-      buttons: [{ title: '💒 청첩장 보러가기', link }],
-    });
   }
 
   function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      showToast('링크가 복사되었습니다');
-    });
+    const url = SITE_URL;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        () => showToast('링크가 복사되었습니다'),
+        () => fallbackCopy(url)
+      );
+    } else {
+      fallbackCopy(url);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast('링크가 복사되었습니다'); }
+    catch (e) { showToast('복사 실패 — 주소창의 링크를 직접 복사해 주세요'); }
+    document.body.removeChild(ta);
   }
 
   /* ──────── 배경음악 ──────── */
