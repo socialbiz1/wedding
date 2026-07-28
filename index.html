@@ -67,6 +67,8 @@
       color: var(--deep);
     }
     .bgm-btn:active { background: var(--blush); }
+    /* 사진 확대(라이트박스) 중엔 음악 버튼 숨김 — 닫기 X와 겹침 방지 */
+    body.lb-open .bgm-btn { display: none; }
     .bgm-btn .disc { display: inline-block; }
     .bgm-btn.on .disc { animation: bgmspin 3.5s linear infinite; }
     @keyframes bgmspin { to { transform: rotate(360deg); } }
@@ -1605,6 +1607,7 @@
     document.getElementById('lightbox').classList.remove('gallery-mode');
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('active');
+    document.body.classList.add('lb-open');
   }
 
   function openGalleryLightbox(i) { // 갤러리: 화살표·스와이프로 이동
@@ -1612,6 +1615,7 @@
     document.getElementById('lightbox').classList.add('gallery-mode');
     updateLightbox();
     document.getElementById('lightbox').classList.add('active');
+    document.body.classList.add('lb-open');
   }
 
   function updateLightbox() {
@@ -1627,6 +1631,7 @@
 
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
+    document.body.classList.remove('lb-open');
   }
 
   document.addEventListener('keydown', e => {
@@ -1883,18 +1888,22 @@
     }
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
     const link = { mobileWebUrl: SITE_URL, webUrl: SITE_URL };
-    Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '김용환 ♥ 최한솔 결혼합니다',
-        description: '2026년 9월 12일 토요일 오후 2시 30분\n브라이튼 하우스 강남',
-        imageUrl: SITE_URL + 'photos/couple.jpg',
-        link,
-      },
-      buttons: [
-        { title: '💒 청첩장 보러가기', link },
-      ],
-    });
+    try {
+      // 페이지를 스크랩해 카드 생성 → 카드(이미지·본문) 전체가 청첩장으로 연결됨
+      Kakao.Share.sendScrap({ requestUrl: SITE_URL, installTalk: true });
+    } catch (e) {
+      // 폴백: 직접 구성 카드
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '김용환 ♥ 최한솔 결혼합니다',
+          description: '2026년 9월 12일 토요일 오후 2시 30분\n브라이튼 하우스 강남',
+          imageUrl: SITE_URL + 'photos/couple.jpg',
+          link,
+        },
+        buttons: [{ title: '💒 청첩장 보러가기', link }],
+      });
+    }
   }
 
   function copyLink() {
