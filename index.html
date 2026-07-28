@@ -44,6 +44,33 @@
       overflow-wrap: break-word;
     }
 
+    /* ── 배경음악 토글 버튼 ── */
+    .bgm-btn {
+      position: fixed;
+      top: 14px;
+      right: max(14px, calc(50% - 226px));
+      z-index: 3000;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(122,79,58,.18);
+      font-size: 1.05rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep);
+    }
+    .bgm-btn:active { background: var(--blush); }
+    .bgm-btn .disc { display: inline-block; }
+    .bgm-btn.on .disc { animation: bgmspin 3.5s linear infinite; }
+    @keyframes bgmspin { to { transform: rotate(360deg); } }
+
     /* ── 모바일 청첩장 컨테이너: 데스크탑에서도 폰 폭 ── */
     .invite {
       max-width: 480px;
@@ -1061,6 +1088,12 @@
 </head>
 <body>
 
+<!-- 배경음악 -->
+<audio id="bgm" src="music/bgm.mp3" loop preload="auto"></audio>
+<button class="bgm-btn" id="bgmBtn" aria-label="배경음악 켜기/끄기">
+  <span class="disc" id="bgmIcon">🎵</span>
+</button>
+
 <div class="invite">
 
   <!-- ════════════ ① HERO ════════════ -->
@@ -1868,6 +1901,47 @@
       showToast('링크가 복사되었습니다');
     });
   }
+
+  /* ──────── 배경음악 ──────── */
+  (function () {
+    const bgm = document.getElementById('bgm');
+    const btn = document.getElementById('bgmBtn');
+    const icon = document.getElementById('bgmIcon');
+    let playing = false;
+
+    function paint() {
+      icon.textContent = playing ? '🎵' : '🔇';
+      btn.classList.toggle('on', playing);
+    }
+
+    function tryPlay() {
+      return bgm.play().then(() => { playing = true; paint(); })
+                       .catch(() => { playing = false; paint(); });
+    }
+
+    // 1) 로드 시 자동재생 시도 (대부분 브라우저는 차단 → 아래 첫 터치에서 시작)
+    tryPlay();
+
+    // 2) 자동재생이 막히면 사용자의 첫 상호작용에서 재생
+    function onFirst() {
+      if (!playing) tryPlay();
+      window.removeEventListener('touchstart', onFirst);
+      window.removeEventListener('click', onFirst);
+      window.removeEventListener('scroll', onFirst);
+    }
+    window.addEventListener('touchstart', onFirst, { passive: true });
+    window.addEventListener('click', onFirst);
+    window.addEventListener('scroll', onFirst, { passive: true });
+
+    // 3) 버튼으로 켜기/끄기
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation(); // window click 리스너와 중복 방지
+      if (playing) { bgm.pause(); playing = false; paint(); }
+      else { bgm.play().then(() => { playing = true; paint(); }).catch(() => {}); }
+    });
+
+    paint();
+  })();
 </script>
 
 </body>
