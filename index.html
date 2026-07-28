@@ -1882,16 +1882,17 @@
       return;
     }
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
+    const link = { mobileWebUrl: SITE_URL, webUrl: SITE_URL };
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: '김용환 ♥ 최한솔 결혼합니다',
-        description: '2026년 9월 12일 토요일 오후 2시 30분\n브라이튼 하우스 강남',
+        description: '2026년 9월 12일 토요일 오후 2시 30분\n브라이튼 하우스 강남\n\n▶ 아래 버튼으로 청첩장을 확인해 주세요',
         imageUrl: SITE_URL + 'photos/couple.jpg',
-        link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL },
+        link,
       },
       buttons: [
-        { title: '청첩장 보기', link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL } },
+        { title: '💒 청첩장 보러가기', link },
       ],
     });
   }
